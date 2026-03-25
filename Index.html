@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07071a">
+<style>html{background:#07071a !important;}*{-webkit-tap-highlight-color:transparent;}</style>
+<title>Inside the ADHD Mind 🧠</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07071a;
+  --panel: #0f0f28;
+  --panel2: #161636;
+  --pink: #ff2d78;
+  --blue: #00d4ff;
+  --yellow: #ffe600;
+  --green: #00ffaa;
+  --purple: #c84bff;
+  --orange: #ff7b2c;
+  --white: #f0eaff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Nunito',sans-serif; background:#07071a; color:var(--white); min-height:100vh; overflow-x:hidden; }
+
+/* STARFIELD */
+#starfield { position:fixed; inset:0; pointer-events:none; z-index:0; }
+.star { position:absolute; border-radius:50%; background:white; animation:twinkle var(–d) infinite alternate ease-in-out; animation-delay:var(–dl); }
+@keyframes twinkle { from{opacity:0.1;transform:scale(0.8)} to{opacity:0.9;transform:scale(1.3)} }
+
+/* FLOATING THOUGHTS */
+#floaties { position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+.floaty { position:absolute; border-radius:99px; padding:5px 12px; font-size:11px; font-weight:800; white-space:nowrap; animation:floatUp var(–dur) linear forwards; opacity:0; }
+@keyframes floatUp { 0%{transform:translateY(100vh) rotate(-8deg);opacity:0} 8%{opacity:1} 92%{opacity:1} 100%{transform:translateY(-100px) rotate(8deg);opacity:0} }
+
+/* HYPERFOCUS TAKEOVER */
+#hyperfocusOverlay {
+position:fixed; inset:0; z-index:500;
+background:#000;
+display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px;
+opacity:0; pointer-events:none;
+transition:opacity 0.6s;
+}
+#hyperfocusOverlay.active { opacity:1; pointer-events:all; }
+.hf-stars { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.hf-ring {
+width:200px; height:200px;
+border-radius:50%;
+border:3px solid var(–blue);
+box-shadow:0 0 60px var(–blue), inset 0 0 60px rgba(0,212,255,0.1);
+animation:hfPulse 2s infinite ease-in-out;
+display:flex; align-items:center; justify-content:center;
+position:relative; z-index:2;
+}
+@keyframes hfPulse { 0%,100%{transform:scale(1);box-shadow:0 0 60px var(–blue),inset 0 0 60px rgba(0,212,255,0.1)} 50%{transform:scale(1.06);box-shadow:0 0 100px var(–blue),inset 0 0 80px rgba(0,212,255,0.2)} }
+.hf-emoji { font-size:64px; animation:hfBop 1.5s infinite ease-in-out; }
+@keyframes hfBop { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.hf-title { font-family:‘Fredoka One’,cursive; font-size:clamp(28px,7vw,48px); color:var(–blue); text-shadow:0 0 40px var(–blue); text-align:center; position:relative; z-index:2; }
+.hf-sub { font-size:14px; color:#a0e8ff; font-weight:700; text-align:center; max-width:320px; line-height:1.6; position:relative; z-index:2; opacity:0.85; }
+.hf-fact { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.3); border-radius:14px; padding:14px 20px; max-width:340px; font-size:12px; font-weight:700; color:#c0eeff; text-align:center; line-height:1.6; position:relative; z-index:2; }
+.hf-fact strong { color:var(–blue); }
+.hf-exit {
+background:transparent; border:2px solid var(–blue); border-radius:99px;
+padding:12px 32px; font-family:‘Fredoka One’,cursive; font-size:16px;
+color:var(–blue); cursor:pointer; transition:all 0.25s; position:relative; z-index:2;
+box-shadow:0 0 20px rgba(0,212,255,0.3);
+}
+.hf-exit:hover { background:var(–blue); color:#000; box-shadow:0 0 40px var(–blue); }
+.hf-timer { font-family:‘Fredoka One’,cursive; font-size:13px; color:rgba(0,212,255,0.5); position:relative; z-index:2; }
+
+/* MAIN WRAPPER */
+.app { position:relative; z-index:2; max-width:860px; margin:0 auto; padding:18px 14px 60px; }
+
+/* HEADER */
+.header { text-align:center; margin-bottom:22px; animation:popIn 0.7s ease both; }
+@keyframes popIn { from{opacity:0;transform:scale(0.85) translateY(-10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.header h1 { font-family:‘Fredoka One’,cursive; font-size:clamp(26px,7vw,54px); line-height:1.05; background:linear-gradient(100deg,var(–pink),var(–blue),var(–yellow),var(–green)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 0 18px rgba(255,45,120,0.5)); }
+.header .sub { margin-top:6px; font-size:13px; color:#9090bb; font-weight:700; }
+
+/* NAV TABS */
+.tabs { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:18px; animation:popIn 0.7s 0.15s ease both; }
+.tab { background:var(–panel2); border:2px solid var(–tab-color); border-radius:99px; padding:8px 18px; font-family:‘Fredoka One’,cursive; font-size:13px; cursor:pointer; color:#9090bb; transition:all 0.2s ease; }
+.tab:hover { color:var(–white); }
+.tab.active { color:#000; border-color:var(–tab-color); background:var(–tab-color); box-shadow:0 0 18px var(–tab-color); }
+
+/* SECTIONS */
+.section { display:none; animation:fadeIn 0.4s ease; }
+.section.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* CARDS */
+.card { background:var(–panel); border:1px solid rgba(255,255,255,0.07); border-radius:20px; padding:18px; margin-bottom:14px; transition:border-color 0.3s; }
+.card:hover { border-color:rgba(255,255,255,0.15); }
+
+/* BRAIN DASHBOARD */
+.brain-hero { display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:14px; }
+.brain-visual { position:relative; width:150px; height:150px; flex-shrink:0; }
+.brain-svg { width:100%; height:100%; animation:brainPulse 2.5s infinite ease-in-out; }
+@keyframes brainPulse { 0%,100%{filter:drop-shadow(0 0 20px var(–pink));transform:scale(1)} 50%{filter:drop-shadow(0 0 40px var(–blue));transform:scale(1.05)} }
+.brain-centre { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none; }
+.brain-centre .be { font-size:30px; animation:bop 1.2s infinite ease-in-out; }
+@keyframes bop { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.brain-centre .bn { font-family:‘Fredoka One’,cursive; font-size:9px; opacity:0.8; margin-top:2px; }
+.brain-info { flex:1; min-width:180px; }
+.mode-description { font-size:13px; line-height:1.6; color:#c0b8e8; margin-bottom:12px; }
+
+/* Mode buttons */
+.modes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+.mode-btn { border:none; border-radius:14px; padding:12px 6px; font-family:‘Fredoka One’,cursive; font-size:12px; cursor:pointer; background:var(–panel2); color:#9090bb; border:2px solid transparent; transition:all 0.2s ease; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.mode-btn .me { font-size:22px; }
+.mode-btn .ms { font-size:9px; font-family:‘Nunito’,sans-serif; opacity:0.65; }
+.mode-btn:hover { transform:translateY(-2px); }
+.mode-btn.active { color:var(–white); border-color:var(–mc); background:rgba(255,255,255,0.05); box-shadow:0 0 18px var(–mc); transform:translateY(-2px); }
+
+/* Stats */
+.stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+.stat-box { background:var(–panel2); border-radius:14px; padding:10px 8px; text-align:center; }
+.stat-box .slabel { font-size:8px; text-transform:uppercase; letter-spacing:1.5px; opacity:0.5; margin-bottom:5px; font-weight:800; }
+.stat-box .sbar-wrap { background:rgba(255,255,255,0.07); border-radius:99px; height:7px; overflow:hidden; margin-bottom:4px; }
+.stat-box .sbar { height:100%; border-radius:99px; transition:width 0.7s cubic-bezier(.34,1.56,.64,1); }
+.stat-box .sval { font-family:‘Fredoka One’,cursive; font-size:15px; }
+
+/* Chaos meter */
+.chaos-wrap { background:var(–panel2); border-radius:14px; padding:12px 14px; margin-bottom:14px; }
+.chaos-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.chaos-top span:first-child { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1.5px; opacity:0.5; }
+.chaos-num { font-family:‘Fredoka One’,cursive; font-size:24px; color:var(–yellow); }
+.chaos-bar-outer { background:rgba(255,255,255,0.07); border-radius:99px; height:16px; overflow:hidden; }
+.chaos-bar-inner { height:100%; border-radius:99px; background:linear-gradient(90deg,var(–green),var(–yellow),var(–orange),var(–pink)); transition:width 0.7s cubic-bezier(.34,1.56,.64,1); position:relative; }
+.chaos-bar-inner::after { content:’’; position:absolute; inset:0; background:linear-gradient(90deg,transparent 40%,rgba(255,255,255,0.25)); animation:shine 1.8s infinite; }
+@keyframes shine { 0%,100%{opacity:0} 50%{opacity:1} }
+
+/* Action btns */
+.action-row { display:flex; gap:8px; flex-wrap:wrap; }
+.act-btn { flex:1; min-width:100px; border:none; border-radius:12px; padding:11px 10px; font-family:‘Fredoka One’,cursive; font-size:13px; cursor:pointer; transition:all 0.2s ease; display:flex; align-items:center; justify-content:center; gap:5px; }
+.act-btn:hover { transform:scale(1.04); }
+.act-btn:active { transform:scale(0.96); }
+.act-btn.btn-flash { animation:btnFlash 0.5s ease both; }
+@keyframes btnFlash { 0%{filter:brightness(1)} 40%{filter:brightness(2.5) saturate(2)} 100%{filter:brightness(1)} }
+
+/* Notification - bigger and more obvious */
+.notif { position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-120px); background:var(–panel); border-radius:16px; padding:14px 22px; font-family:‘Fredoka One’,cursive; font-size:15px; z-index:300; transition:transform 0.4s cubic-bezier(.34,1.56,.64,1),opacity 0.4s; opacity:0; max-width:88vw; text-align:center; border:2px solid var(–notif-color,var(–yellow)); box-shadow:0 0 30px var(–notif-color,var(–yellow)),0 8px 32px rgba(0,0,0,0.6); color:var(–notif-color,var(–yellow)); }
+.notif.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+/* Thought tags */
+.thought-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.ttag { border-radius:99px; padding:5px 13px; font-size:11px; font-weight:800; animation:tagPop 0.35s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes tagPop { from{opacity:0;transform:scale(0.4)} to{opacity:1;transform:scale(1)} }
+
+/* FUN FACTS */
+.fact-card { background:var(–panel); border-radius:20px; padding:20px; margin-bottom:12px; border:2px solid transparent; transition:all 0.3s ease; cursor:pointer; position:relative; overflow:hidden; }
+.fact-card::before { content:’’; position:absolute; top:0; left:0; right:0; height:3px; background:var(–fc); opacity:0.8; }
+.fact-card:hover { border-color:var(–fc); transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
+.fact-header { display:flex; align-items:flex-start; gap:12px; margin-bottom:10px; }
+.fact-emoji { font-size:28px; flex-shrink:0; }
+.fact-label { font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:2px; color:var(–fc); margin-bottom:4px; }
+.fact-title { font-family:‘Fredoka One’,cursive; font-size:17px; line-height:1.2; color:var(–white); }
+.fact-body { font-size:13px; line-height:1.65; color:#b0a8d8; }
+.fact-body strong { color:var(–fc); }
+.fact-relatable { margin-top:10px; background:rgba(255,255,255,0.04); border-radius:10px; padding:9px 12px; font-size:11px; font-weight:700; color:#9090bb; border-left:3px solid var(–fc); }
+.fact-relatable::before { content:’💬 Real talk: ’; color:var(–fc); }
+.facts-nav { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:16px; }
+.fcat-btn { background:var(–panel2); border:2px solid transparent; border-radius:99px; padding:7px 16px; font-size:12px; font-weight:800; cursor:pointer; color:#9090bb; transition:all 0.2s; }
+.fcat-btn:hover, .fcat-btn.active { border-color:var(–yellow); color:var(–yellow); box-shadow:0 0 12px rgba(255,230,0,0.3); }
+
+/* MINI GAMES */
+.games-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:14px; }
+.game-card { background:var(–panel); border-radius:20px; padding:18px 14px; border:2px solid transparent; cursor:pointer; transition:all 0.25s ease; text-align:center; }
+.game-card:hover { border-color:var(–gc); transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,0.4); }
+.game-card .ge { font-size:36px; margin-bottom:8px; display:block; }
+.game-card .gt { font-family:‘Fredoka One’,cursive; font-size:15px; margin-bottom:4px; color:var(–gc); }
+.game-card .gd { font-size:11px; color:#9090bb; font-weight:700; }
+.game-card .gdiff { display:inline-block; margin-top:6px; font-size:9px; font-weight:800; letter-spacing:1px; padding:2px 8px; border-radius:99px; }
+
+/* Game modal */
+.game-modal { position:fixed; inset:0; background:rgba(7,7,26,0.95); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+.game-modal.open { opacity:1; pointer-events:all; }
+.game-box { background:var(–panel); border-radius:24px; padding:24px; max-width:520px; width:100%; max-height:90vh; overflow-y:auto; border:2px solid rgba(255,255,255,0.1); box-shadow:0 20px 60px rgba(0,0,0,0.7); transform:scale(0.9); transition:transform 0.3s; }
+.game-modal.open .game-box { transform:scale(1); }
+.game-box-title { font-family:‘Fredoka One’,cursive; font-size:24px; margin-bottom:6px; }
+.game-box-desc { font-size:12px; color:#9090bb; font-weight:700; margin-bottom:18px; }
+.close-btn { float:right; background:rgba(255,255,255,0.1); border:none; border-radius:99px; width:32px; height:32px; font-size:16px; cursor:pointer; color:var(–white); transition:background 0.2s; display:flex; align-items:center; justify-content:center; }
+.close-btn:hover { background:rgba(255,255,255,0.2); }
+
+/* Focus click */
+#clickTarget { width:80px; height:80px; border-radius:50%; background:var(–pink); border:none; font-size:28px; cursor:pointer; position:absolute; transition:transform 0.1s; box-shadow:0 0 30px var(–pink); display:flex; align-items:center; justify-content:center; }
+#clickTarget:hover { transform:scale(1.1); }
+#clickTarget:active { transform:scale(0.9); }
+.click-arena { background:rgba(255,255,255,0.03); border-radius:16px; height:240px; position:relative; overflow:hidden; margin-bottom:14px; border:1px solid rgba(255,255,255,0.07); }
+.game-score-row { display:flex; gap:10px; margin-bottom:14px; }
+.gscore { flex:1; background:var(–panel2); border-radius:12px; padding:10px; text-align:center; }
+.gscore .gsl { font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:1px; opacity:0.5; margin-bottom:4px; }
+.gscore .gsv { font-family:‘Fredoka One’,cursive; font-size:22px; }
+.click-progress-wrap { background:rgba(255,255,255,0.07); border-radius:99px; height:12px; overflow:hidden; margin-bottom:8px; }
+.click-progress-bar { height:100%; border-radius:99px; background:linear-gradient(90deg,var(–pink),var(–purple)); transition:width 0.2s ease; }
+
+/* Memory */
+.memory-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
+.mem-card { aspect-ratio:1; border-radius:10px; background:var(–panel2); border:2px solid rgba(255,255,255,0.1); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:24px; transition:all 0.3s; user-select:none; }
+.mem-card.flipped { background:rgba(255,45,120,0.15); border-color:var(–pink); }
+.mem-card.matched { background:rgba(0,255,170,0.15); border-color:var(–green); animation:matchPop 0.4s ease; }
+@keyframes matchPop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+.mem-card.hidden-face { font-size:0; background:var(–panel2); }
+
+/* Would you rather */
+.wyr-box { text-align:center; }
+.wyr-q { font-family:‘Fredoka One’,cursive; font-size:20px; margin-bottom:20px; line-height:1.3; color:var(–yellow); }
+.wyr-options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.wyr-opt { background:var(–panel2); border:2px solid rgba(255,255,255,0.1); border-radius:16px; padding:16px 12px; cursor:pointer; font-weight:800; font-size:13px; transition:all 0.25s; line-height:1.4; }
+.wyr-opt:hover { transform:scale(1.04); }
+.wyr-opt.chose-a { background:rgba(255,45,120,0.2); border-color:var(–pink); }
+.wyr-opt.chose-b { background:rgba(0,212,255,0.2); border-color:var(–blue); }
+.wyr-result { font-size:13px; color:#9090bb; font-weight:700; margin-bottom:12px; min-height:20px; animation:fadeIn 0.4s ease; }
+.wyr-next { background:var(–yellow); border:none; border-radius:99px; padding:10px 28px; font-family:‘Fredoka One’,cursive; font-size:15px; color:#000; cursor:pointer; transition:transform 0.2s; }
+.wyr-next:hover { transform:scale(1.05); }
+
+/* Quiz */
+.quiz-q { font-family:‘Fredoka One’,cursive; font-size:18px; margin-bottom:14px; color:var(–white); }
+.quiz-opts { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.quiz-opt { background:var(–panel2); border:2px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 14px; cursor:pointer; font-size:13px; font-weight:700; transition:all 0.2s; text-align:left; }
+.quiz-opt:hover { border-color:var(–purple); transform:translateX(4px); }
+.quiz-opt.selected { background:rgba(200,75,255,0.15); border-color:var(–purple); }
+.quiz-result { background:rgba(200,75,255,0.1); border:2px solid var(–purple); border-radius:16px; padding:16px; display:none; }
+.quiz-result.show { display:block; animation:fadeIn 0.4s ease; }
+.quiz-result .qrt { font-family:‘Fredoka One’,cursive; font-size:20px; color:var(–purple); margin-bottom:8px; }
+.quiz-result p { font-size:13px; color:#b0a8d8; line-height:1.6; }
+.quiz-progress { background:rgba(255,255,255,0.07); border-radius:99px; height:6px; margin-bottom:16px; overflow:hidden; }
+.quiz-prog-fill { height:100%; background:var(–purple); border-radius:99px; transition:width 0.4s ease; }
+
+/* REACTION GAME */
+.reaction-screen { border-radius:16px; height:220px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; cursor:pointer; transition:all 0.3s; margin-bottom:14px; border:2px solid rgba(255,255,255,0.07); font-family:‘Fredoka One’,cursive; font-size:22px; text-align:center; padding:20px; }
+.reaction-screen.wait { background:rgba(255,45,120,0.08); color:var(–pink); }
+.reaction-screen.ready { background:rgba(0,255,170,0.15); border-color:var(–green); color:var(–green); animation:readyPulse 0.3s ease; }
+@keyframes readyPulse { from{transform:scale(0.96)} to{transform:scale(1)} }
+.reaction-screen.too-early { background:rgba(255,123,44,0.15); border-color:var(–orange); color:var(–orange); }
+.reaction-times { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+.rt-chip { background:var(–panel2); border-radius:8px; padding:5px 10px; font-family:‘Fredoka One’,cursive; font-size:13px; color:var(–green); }
+
+/* PATTERN GAME */
+.pattern-display { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px; }
+.pattern-cell { aspect-ratio:1; border-radius:12px; background:var(–panel2); border:2px solid rgba(255,255,255,0.08); cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; font-size:28px; }
+.pattern-cell.lit { background:rgba(255,230,0,0.25); border-color:var(–yellow); box-shadow:0 0 20px rgba(255,230,0,0.4); }
+.pattern-cell.correct { background:rgba(0,255,170,0.2); border-color:var(–green); }
+.pattern-cell.wrong { background:rgba(255,45,120,0.2); border-color:var(–pink); animation:shake 0.3s ease; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+/* BOX BREATHING */
+.breathing-section { text-align:center; }
+.breath-ring-wrap { display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+.breath-ring {
+width:200px; height:200px;
+border-radius:50%;
+border:3px solid var(–blue);
+display:flex; align-items:center; justify-content:center;
+flex-direction:column;
+position:relative;
+transition:all 1s ease;
+box-shadow:0 0 30px rgba(0,212,255,0.3);
+}
+.breath-ring.inhale { transform:scale(1.2); border-color:var(–green); box-shadow:0 0 50px rgba(0,255,170,0.4); }
+.breath-ring.hold { border-color:var(–yellow); box-shadow:0 0 50px rgba(255,230,0,0.4); }
+.breath-ring.exhale { transform:scale(0.85); border-color:var(–pink); box-shadow:0 0 50px rgba(255,45,120,0.3); }
+.breath-label { font-family:‘Fredoka One’,cursive; font-size:22px; transition:color 0.5s; }
+.breath-count { font-size:36px; font-family:‘Fredoka One’,cursive; color:var(–blue); margin-top:4px; }
+.breath-instruction { font-size:13px; color:#9090bb; font-weight:700; margin-bottom:16px; max-width:320px; margin-left:auto; margin-right:auto; line-height:1.6; }
+.breath-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px; }
+.breath-step { background:var(–panel2); border-radius:12px; padding:10px 6px; text-align:center; border:2px solid transparent; transition:all 0.4s; }
+.breath-step.current { border-color:var(–blue); background:rgba(0,212,255,0.1); box-shadow:0 0 14px rgba(0,212,255,0.3); }
+.breath-step .bsn { font-family:‘Fredoka One’,cursive; font-size:13px; margin-bottom:2px; }
+.breath-step .bss { font-size:9px; opacity:0.5; font-weight:800; text-transform:uppercase; letter-spacing:1px; }
+.breath-controls { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.breath-btn { border:none; border-radius:99px; padding:12px 28px; font-family:‘Fredoka One’,cursive; font-size:15px; cursor:pointer; transition:all 0.2s; }
+.breath-btn:hover { transform:scale(1.05); }
+.breath-rounds { font-family:‘Fredoka One’,cursive; font-size:13px; color:#9090bb; margin-top:12px; }
+
+/* General btn */
+.genbtn { border:none; border-radius:12px; padding:10px 20px; font-family:‘Fredoka One’,cursive; font-size:14px; cursor:pointer; transition:all 0.2s; }
+.genbtn:hover { transform:scale(1.04); }
+
+/* NOTIFICATION - defined above */
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:99px; }
+
+/* KIDS ZONE */
+.kids-pill { background:var(–panel2); border:2px solid var(–kc); border-radius:99px; padding:8px 16px; font-family:‘Fredoka One’,cursive; font-size:13px; cursor:pointer; color:#9090bb; transition:all 0.2s; }
+.kids-pill:hover { color:var(–white); }
+.kids-pill.active { background:var(–kc); color:#000; box-shadow:0 0 16px var(–kc); }
+.kids-game-card { background:var(–panel); border:2px solid var(–kgc); border-radius:20px; padding:18px 12px; cursor:pointer; transition:all 0.25s; text-align:center; box-shadow:0 0 10px transparent; }
+.kids-game-card:hover { transform:translateY(-4px); box-shadow:0 0 20px var(–kgc); }
+.feeling-btn { background:var(–panel2); border:2px solid rgba(255,255,255,0.1); border-radius:16px; padding:12px 8px; cursor:pointer; font-family:‘Fredoka One’,cursive; font-size:15px; color:var(–white); transition:all 0.2s; line-height:1.4; }
+.feeling-btn:hover { transform:scale(1.06); border-color:rgba(255,255,255,0.3); }
+
+@media(max-width:480px){
+.modes-grid { grid-template-columns:repeat(3,1fr); }
+.wyr-options { grid-template-columns:1fr; }
+.breath-steps { grid-template-columns:repeat(2,1fr); }
+} - always show matching border, fill on active */
+.tab { border: 2px solid var(–tab-color) !important; }
+.tab.active {
+background: var(–tab-color) !important;
+color: #000 !important;
+box-shadow: 0 0 22px var(–tab-color) !important;
+}
+
+/* MODE BUTTONS - full neon fill when active */
+.mode-btn { border: 2px solid var(–mc) !important; }
+.mode-btn.active {
+background: var(–mc) !important;
+color: #000 !important;
+box-shadow: 0 0 22px var(–mc) !important;
+}
+
+/* FACTS CATEGORY PILLS */
+.fcat-btn { border: 2px solid rgba(255,230,0,0.35) !important; color: #ffe600 !important; }
+.fcat-btn.active { background: var(–yellow) !important; color: #000 !important; box-shadow: 0 0 18px rgba(255,230,0,0.5) !important; }
+
+/* OVERSTIM */
+@keyframes overstimPulse { 0%,100%{box-shadow:0 0 10px var(–pink);border-color:var(–pink)} 50%{box-shadow:0 0 30px var(–orange);border-color:var(–orange)} }
+@keyframes exitPulse { from{box-shadow:0 0 10px rgba(255,255,255,0.3)} to{box-shadow:0 0 30px rgba(255,255,255,0.9)} }
+@keyframes numberPop { 0%{opacity:0;transform:scale(0.2) rotate(-20deg)} 60%{opacity:1;transform:scale(1.2) rotate(5deg)} 100%{opacity:1;transform:scale(1) rotate(0deg)} }
+@keyframes screenShake { 0%,100%{transform:translate(0,0)} 10%{transform:translate(-12px,8px)} 20%{transform:translate(10px,-10px)} 30%{transform:translate(-8px,12px)} 40%{transform:translate(14px,-6px)} 50%{transform:translate(-10px,10px)} 60%{transform:translate(8px,-14px)} 70%{transform:translate(-14px,6px)} 80%{transform:translate(12px,10px)} 90%{transform:translate(-6px,-12px)} }
+.screen-shake { animation: screenShake 0.6s ease both; }
+.overstim-thought { position:absolute; border-radius:99px; padding:6px 14px; font-size:13px; font-weight:800; white-space:nowrap; animation:floatUp var(–dur) linear forwards; pointer-events:none; }
+.overstim-number { font-family:‘Fredoka One’,cursive; font-size:clamp(28px,8vw,72px); font-weight:900; animation:numberPop 0.4s cubic-bezier(.34,1.56,.64,1) both; text-shadow:0 0 20px currentColor; }
+</style>
+
+</head>
+<body>
+
+<div id="starfield"></div>
+<div id="floaties"></div>
+
+<!-- HYPERFOCUS OVERLAY -->
+
+<div id="hyperfocusOverlay">
+  <div class="hf-stars" id="hfStars"></div>
+  <div class="hf-ring"><span class="hf-emoji">🔵</span></div>
+  <div class="hf-title">HYPERFOCUS MODE</div>
+  <div class="hf-sub">You have entered the zone. Time does not exist here. Neither does hunger, thirst, or the concept of tomorrow.</div>
+  <div class="hf-fact">
+    <strong>Did you know?</strong> During hyperfocus, the ADHD brain can produce dopamine levels that rival the focus of elite athletes in competition. The same brain that struggles to start a task can become completely unstoppable once it locks on.
+  </div>
+  <div class="hf-timer" id="hfTimer">You've been in the zone for: 0s</div>
+  <button class="hf-exit" onclick="exitHyperfocus()">Snap Out Of It 👋</button>
+</div>
+
+<!-- Game Modal -->
+
+<div class="game-modal" id="gameModal">
+  <div class="game-box" id="gameBox"></div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<div class="app">
+
+  <div class="header">
+    <h1>🧠 Inside the ADHD Mind</h1>
+    <p class="sub">An interactive experience. Buckle up. We lost the buckle.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" style="--tab-color:var(--pink)" onclick="switchTab('brain',this)">🧠 Brain</button>
+    <button class="tab" style="--tab-color:var(--yellow)" onclick="switchTab('facts',this)">⚡ Fun Facts</button>
+    <button class="tab" style="--tab-color:var(--green)" onclick="switchTab('games',this)">🎮 Mini Games</button>
+    <button class="tab" style="--tab-color:var(--blue)" onclick="switchTab('breathe',this)">🌊 Calm Down</button>
+    <button class="tab" style="--tab-color:var(--orange)" onclick="switchTab('vibecheck',this)">🎲 Vibe Check</button>
+    <button class="tab" style="--tab-color:#ff99ff" onclick="switchTab('kids',this)">🌟 Kids Zone</button>
+  </div>
+
+  <!-- BRAIN TAB -->
+
+  <div class="section active" id="tab-brain">
+    <div class="card">
+      <div class="brain-hero">
+        <div class="brain-visual">
+          <svg class="brain-svg" viewBox="0 0 200 200" fill="none">
+            <defs>
+              <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff2d78" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#07071a" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <ellipse cx="100" cy="108" rx="68" ry="58" fill="url(#bg2)" opacity="0.5"/>
+            <path d="M100 52 C80 42,44 52,41 77 C37 97,47 110,41 123 C35 138,49 157,67 157 C77 157,84 150,100 150 C116 150,123 157,133 157 C151 157,165 138,159 123 C153 110,163 97,159 77 C156 52,120 42,100 52Z" stroke="#ff2d78" stroke-width="2" fill="rgba(255,45,120,0.07)" filter="url(#glow2)" id="brainPath"/>
+            <path d="M76 82 C81 72,91 74,89 84" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <path d="M89 84 C87 94,79 97,81 108" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <path d="M81 108 C86 118,96 115,93 126" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <path d="M124 82 C119 72,109 74,111 84" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <path d="M111 84 C113 94,121 97,119 108" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <path d="M119 108 C114 118,104 115,107 126" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+            <line x1="100" y1="57" x2="100" y2="150" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,3"/>
+            <circle cx="64" cy="92" r="4" fill="#ffe600" opacity="0.9" id="s1"/>
+            <circle cx="136" cy="92" r="4" fill="#ffe600" opacity="0.9" id="s2"/>
+            <circle cx="70" cy="127" r="4" fill="#00ffaa" opacity="0.9" id="s3"/>
+            <circle cx="130" cy="127" r="4" fill="#00ffaa" opacity="0.9" id="s4"/>
+            <circle cx="100" cy="68" r="4" fill="#c84bff" opacity="0.9" id="s5"/>
+          </svg>
+          <div class="brain-centre">
+            <span class="be" id="bEmoji">😵‍💫</span>
+            <div class="bn" id="bName">CHAOS</div>
+          </div>
+        </div>
+        <div class="brain-info">
+          <div class="mode-description" id="modeDesc">50 tabs open. Brain is running 47 simultaneous trains of thought. None of them are on the right track. All of them feel urgent.</div>
+          <div class="thought-tags" id="thoughtTags"></div>
+        </div>
+      </div>
+      <div class="modes-grid">
+        <button class="mode-btn active" style="--mc:var(--pink)" data-m="chaos" onclick="setMode('chaos',this)"><span class="me">😵‍💫</span><span>CHAOS</span><span class="ms">50 tabs open</span></button>
+        <button class="mode-btn" style="--mc:var(--blue)" data-m="hyper" onclick="setMode('hyper',this)"><span class="me">🔵</span><span>HYPERFOCUS</span><span class="ms">time is fake</span></button>
+        <button class="mode-btn" style="--mc:#8888bb" data-m="crash" onclick="setMode('crash',this)"><span class="me">💤</span><span>CRASH</span><span class="ms">brain offline</span></button>
+        <button class="mode-btn" style="--mc:var(--orange)" data-m="anxiety" onclick="setMode('anxiety',this)"><span class="me">😰</span><span>ANXIETY</span><span class="ms">catastrophising</span></button>
+        <button class="mode-btn" style="--mc:var(--green)" data-m="vibe" onclick="setMode('vibe',this)"><span class="me">✨</span><span>VIBING</span><span class="ms">rare form</span></button>
+        <button class="mode-btn" style="--mc:var(--purple)" data-m="rsd" onclick="setMode('rsd',this)"><span class="me">💔</span><span>RSD</span><span class="ms">someone sighed</span></button>
+      </div>
+    </div>
+
+```
+<div class="stats-row">
+  <div class="stat-box"><div class="slabel">Focus</div><div class="sbar-wrap"><div class="sbar" id="focusBar" style="width:10%;background:var(--blue)"></div></div><div class="sval" id="focusVal" style="color:var(--blue)">10%</div></div>
+  <div class="stat-box"><div class="slabel">Energy</div><div class="sbar-wrap"><div class="sbar" id="energyBar" style="width:70%;background:var(--green)"></div></div><div class="sval" id="energyVal" style="color:var(--green)">70%</div></div>
+  <div class="stat-box"><div class="slabel">Feelings</div><div class="sbar-wrap"><div class="sbar" id="emotionBar" style="width:80%;background:var(--pink)"></div></div><div class="sval" id="emotionVal" style="color:var(--pink)">80%</div></div>
+</div>
+
+<div class="chaos-wrap">
+  <div class="chaos-top"><span>🌀 Brain Chaos Level</span><span class="chaos-num" id="chaosNum">90%</span></div>
+  <div class="chaos-bar-outer"><div class="chaos-bar-inner" id="chaosBar" style="width:90%"></div></div>
+</div>
+
+<div class="action-row">
+  <button class="act-btn" style="background:rgba(255,230,0,0.12);color:var(--yellow);border:1.5px solid rgba(255,230,0,0.25)" onclick="newThought(this)">💭 New Thought</button>
+  <button class="act-btn" style="background:rgba(255,45,120,0.15);color:var(--pink);border:1.5px solid rgba(255,45,120,0.4);font-size:12px;animation:overstimPulse 1.8s infinite" onclick="startOverstimWarning()">⚡ OVERSTIM</button>
+  <button class="act-btn" style="background:rgba(255,45,120,0.1);color:var(--pink);border:1.5px solid rgba(255,45,120,0.25)" onclick="squirrel(this)">🐿️ Squirrel!</button>
+</div>
+```
+
+  </div>
+
+  <!-- FACTS TAB -->
+
+  <div class="section" id="tab-facts">
+    <div class="facts-nav" id="factsNav">
+      <button class="fcat-btn active" onclick="filterFacts('all',this)">All</button>
+      <button class="fcat-btn" onclick="filterFacts('science',this)">🔬 Science</button>
+      <button class="fcat-btn" onclick="filterFacts('superpowers',this)">⚡ Superpowers</button>
+      <button class="fcat-btn" onclick="filterFacts('struggles',this)">💔 Struggles</button>
+      <button class="fcat-btn" onclick="filterFacts('myths',this)">💥 Myths Busted</button>
+    </div>
+    <div id="factsContainer"></div>
+  </div>
+
+  <!-- GAMES TAB -->
+
+  <div class="section" id="tab-games">
+    <div class="card" style="text-align:center;padding:14px 18px 10px;margin-bottom:14px;">
+      <div style="font-family:'Fredoka One',cursive;font-size:15px;margin-bottom:4px;">🎮 Pick a Game</div>
+      <div style="font-size:11px;color:#9090bb;font-weight:700;">Each one is designed to feel exactly like having ADHD</div>
+    </div>
+    <div class="games-grid">
+      <div class="game-card" style="--gc:var(--pink)" onclick="openGame('focus')">
+        <span class="ge">🎯</span>
+        <div class="gt">FOCUS CLICK</div>
+        <div class="gd">Hit the target 50 times before time runs out</div>
+        <span class="gdiff" style="background:rgba(255,45,120,0.15);color:var(--pink)">MEDIUM</span>
+      </div>
+      <div class="game-card" style="--gc:var(--blue)" onclick="openGame('memory')">
+        <span class="ge">🃏</span>
+        <div class="gt">MEMORY MATCH</div>
+        <div class="gd">Match the pairs. Try not to forget which card was where.</div>
+        <span class="gdiff" style="background:rgba(0,212,255,0.15);color:var(--blue)">MEDIUM</span>
+      </div>
+      <div class="game-card" style="--gc:var(--yellow)" onclick="openGame('wyr')">
+        <span class="ge">🤔</span>
+        <div class="gt">WOULD YOU RATHER</div>
+        <div class="gd">ADHD edition. Impossible choices only.</div>
+        <span class="gdiff" style="background:rgba(255,230,0,0.15);color:var(--yellow)">FUN</span>
+      </div>
+      <div class="game-card" style="--gc:var(--purple)" onclick="openGame('quiz')">
+        <span class="ge">🧩</span>
+        <div class="gt">WHAT'S YOUR TYPE?</div>
+        <div class="gd">Inattentive, hyperactive, or combo chaos?</div>
+        <span class="gdiff" style="background:rgba(200,75,255,0.15);color:var(--purple)">QUIZ</span>
+      </div>
+      <div class="game-card" style="--gc:var(--green)" onclick="openGame('reaction')">
+        <span class="ge">⚡</span>
+        <div class="gt">REACTION TIME</div>
+        <div class="gd">Wait for green then tap as fast as you can. No cheating.</div>
+        <span class="gdiff" style="background:rgba(0,255,170,0.15);color:var(--green)">HARD</span>
+      </div>
+      <div class="game-card" style="--gc:var(--orange)" onclick="openGame('pattern')">
+        <span class="ge">🔮</span>
+        <div class="gt">PATTERN MEMORY</div>
+        <div class="gd">Watch the sequence. Repeat it. The sequence gets longer.</div>
+        <span class="gdiff" style="background:rgba(255,123,44,0.15);color:var(--orange)">HARD</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREATHE TAB -->
+
+  <div class="section" id="tab-breathe">
+    <div class="card" style="text-align:center;padding:16px 18px 12px;margin-bottom:14px;">
+      <div style="font-family:'Fredoka One',cursive;font-size:18px;margin-bottom:6px;">🌊 Box Breathing</div>
+      <div style="font-size:12px;color:#9090bb;font-weight:700;line-height:1.6;">Used by everyone from astronauts to Navy SEALs, box breathing activates the parasympathetic nervous system and genuinely reduces cortisol. Especially useful when the ADHD brain is in overdrive.</div>
+    </div>
+
+```
+<div class="card">
+  <div class="breathing-section">
+    <div class="breath-steps" id="breathSteps">
+      <div class="breath-step current" id="bs0"><div class="bsn" style="color:var(--green)">Inhale</div><div class="bss">4 counts</div></div>
+      <div class="breath-step" id="bs1"><div class="bsn" style="color:var(--yellow)">Hold</div><div class="bss">4 counts</div></div>
+      <div class="breath-step" id="bs2"><div class="bsn" style="color:var(--pink)">Exhale</div><div class="bss">4 counts</div></div>
+      <div class="breath-step" id="bs3"><div class="bsn" style="color:var(--blue)">Hold</div><div class="bss">4 counts</div></div>
+    </div>
+
+    <div class="breath-ring-wrap">
+      <div class="breath-ring" id="breathRing">
+        <div class="breath-label" id="breathLabel" style="color:var(--green)">Ready</div>
+        <div class="breath-count" id="breathCount">4</div>
+      </div>
+    </div>
+
+    <div class="breath-instruction" id="breathInstruction">Box breathing helps slow a racing brain. Each cycle is 16 seconds. Start with 3 rounds and build from there.</div>
+
+    <div class="breath-controls">
+      <button class="breath-btn" id="breathStartBtn" style="background:var(--green);color:#000" onclick="startBreathing()">Start Breathing</button>
+      <button class="breath-btn" id="breathStopBtn" style="background:rgba(255,255,255,0.08);color:#9090bb;display:none" onclick="stopBreathing()">Stop</button>
+    </div>
+    <div class="breath-rounds" id="breathRoundsDisplay"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-family:'Fredoka One',cursive;font-size:15px;margin-bottom:12px;color:var(--blue)">💡 Why it works for ADHD brains</div>
+  <div style="font-size:13px;color:#b0a8d8;line-height:1.7;">
+    When the ADHD brain is overwhelmed, the body's stress response kicks in and floods the system with cortisol. Box breathing directly counteracts this by stimulating the <strong style="color:var(--blue)">vagus nerve</strong>, which activates the body's rest-and-digest mode. Research shows that just 3 to 5 minutes of controlled breathing can measurably reduce anxiety, improve working memory, and make it easier to start tasks. Think of it as a manual override for your nervous system.
+  </div>
+</div>
+
+<div class="card" style="border:2px solid var(--green);box-shadow:0 0 20px rgba(0,255,170,0.1);">
+  <div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--green);margin-bottom:6px;">🌿 5-4-3-2-1 Grounding</div>
+  <div style="font-size:12px;color:#9090bb;font-weight:700;line-height:1.6;margin-bottom:14px;">When breathing isn't enough, grounding pulls the brain into the present moment by engaging all five senses. Works brilliantly alongside box breathing.</div>
+  <button onclick="openGrounding()" style="background:var(--green);border:none;border-radius:99px;padding:11px 28px;font-family:'Fredoka One',cursive;font-size:15px;color:#000;cursor:pointer;transition:all 0.2s;box-shadow:0 0 20px rgba(0,255,170,0.3);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">Start Grounding 🌿</button>
+</div>
+```
+
+  </div>
+
+  <!-- VIBE CHECK TAB -->
+
+  <div class="section" id="tab-vibecheck">
+    <div class="card" style="text-align:center;padding:16px 18px 12px;margin-bottom:14px;border:2px solid var(--orange);box-shadow:0 0 20px rgba(255,123,44,0.15);">
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--orange);margin-bottom:6px;">🎲 Vibe Check</div>
+      <div style="font-size:12px;color:#9090bb;font-weight:700;line-height:1.6;">Random activities, questions and prompts to check in with yourself. Tap the dice to get a new one.</div>
+    </div>
+
+```
+<div id="vibeCard" class="card" style="border:2px solid var(--orange);box-shadow:0 0 20px rgba(255,123,44,0.1);min-height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;padding:28px 20px;cursor:pointer;" onclick="rollVibe()">
+  <div id="vibeEmoji" style="font-size:52px;animation:bop 1.5s infinite ease-in-out;">🎲</div>
+  <div id="vibeTitle" style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--orange);">Tap to roll your vibe</div>
+  <div id="vibeBody" style="font-size:13px;color:#b0a8d8;font-weight:700;line-height:1.65;max-width:360px;"></div>
+  <div id="vibeAction" style="background:rgba(255,123,44,0.15);border:1px solid rgba(255,123,44,0.3);border-radius:12px;padding:10px 16px;font-size:12px;font-weight:800;color:var(--orange);display:none;"></div>
+</div>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+  <button onclick="rollVibe()" style="flex:1;background:rgba(255,123,44,0.15);border:2px solid var(--orange);border-radius:14px;padding:12px;font-family:'Fredoka One',cursive;font-size:14px;color:var(--orange);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">🎲 Roll Again</button>
+  <button onclick="rollVibeCategory('checkin')" style="flex:1;background:rgba(200,75,255,0.1);border:2px solid var(--purple);border-radius:14px;padding:12px;font-family:'Fredoka One',cursive;font-size:14px;color:var(--purple);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">💜 Check In</button>
+  <button onclick="rollVibeCategory('challenge')" style="flex:1;background:rgba(255,230,0,0.1);border:2px solid var(--yellow);border-radius:14px;padding:12px;font-family:'Fredoka One',cursive;font-size:14px;color:var(--yellow);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">⚡ Challenge</button>
+</div>
+```
+
+  </div>
+
+  <!-- KIDS ZONE TAB -->
+
+  <div class="section" id="tab-kids">
+    <div class="card" style="text-align:center;padding:18px;background:linear-gradient(135deg,rgba(255,153,255,0.12),rgba(255,230,0,0.08));border:2px solid #ff99ff;box-shadow:0 0 30px rgba(255,153,255,0.2);">
+      <div style="font-size:42px;margin-bottom:6px;">🌟</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:24px;color:#ff99ff;margin-bottom:4px;">Kids Zone!</div>
+      <div style="font-size:13px;color:#c0b8e8;font-weight:700;line-height:1.5;">Discover how amazing your brain is, play fun games, and find out what makes you brilliant! 🦸</div>
+    </div>
+    <div id="kidsNav" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;">
+      <button class="kids-pill active" style="--kc:#ff99ff" onclick="showKidsSection('facts',this)">🧠 Brain Facts</button>
+      <button class="kids-pill" style="--kc:#ffe600" onclick="showKidsSection('games',this)">🎮 Fun Games</button>
+      <button class="kids-pill" style="--kc:#00ffaa" onclick="showKidsSection('feelings',this)">💚 My Feelings</button>
+      <button class="kids-pill" style="--kc:#00d4ff" onclick="showKidsSection('activities',this)">🎨 Activities</button>
+      <button class="kids-pill" style="--kc:#ff7b2c" onclick="showKidsSection('superpowers',this)">⚡ Superpowers</button>
+    </div>
+    <div id="kids-facts" class="kids-section">
+      <div class="card" style="border:2px solid #ff99ff;box-shadow:0 0 20px rgba(255,153,255,0.15);text-align:center;padding:24px 18px;">
+        <div id="kidsFactEmoji" style="font-size:52px;margin-bottom:10px;animation:bop 1.5s infinite ease-in-out;">🧠</div>
+        <div id="kidsFactTitle" style="font-family:'Fredoka One',cursive;font-size:20px;color:#ff99ff;margin-bottom:10px;">Tap to learn a cool brain fact!</div>
+        <div id="kidsFactBody" style="font-size:14px;color:#c0b8e8;font-weight:700;line-height:1.7;min-height:60px;"></div>
+      </div>
+      <button onclick="nextKidsFact()" style="width:100%;background:#ff99ff;border:none;border-radius:14px;padding:13px;font-family:'Fredoka One',cursive;font-size:16px;color:#000;cursor:pointer;margin-bottom:14px;box-shadow:0 0 20px rgba(255,153,255,0.3);transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">🧠 Next Fact!</button>
+    </div>
+    <div id="kids-games" class="kids-section" style="display:none;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px;">
+        <div class="kids-game-card" style="--kgc:#ffe600" onclick="openKidsGame('emoji')"><span style="font-size:40px;">😂</span><div style="font-family:'Fredoka One',cursive;font-size:14px;color:#ffe600;margin-top:6px;">Emoji Quiz</div><div style="font-size:11px;color:#9090bb;font-weight:700;margin-top:3px;">Guess the word from emojis!</div></div>
+        <div class="kids-game-card" style="--kgc:#00ffaa" onclick="openKidsGame('balloon')"><span style="font-size:40px;">🎈</span><div style="font-family:'Fredoka One',cursive;font-size:14px;color:#00ffaa;margin-top:6px;">Pop Balloons!</div><div style="font-size:11px;color:#9090bb;font-weight:700;margin-top:3px;">Tap as many as you can!</div></div>
+        <div class="kids-game-card" style="--kgc:#ff99ff" onclick="openKidsGame('animal')"><span style="font-size:40px;">🦁</span><div style="font-family:'Fredoka One',cursive;font-size:14px;color:#ff99ff;margin-top:6px;">Animal Quiz</div><div style="font-size:11px;color:#9090bb;font-weight:700;margin-top:3px;">Can you name the animal?</div></div>
+        <div class="kids-game-card" style="--kgc:#00d4ff" onclick="openKidsGame('colour')"><span style="font-size:40px;">🎨</span><div style="font-family:'Fredoka One',cursive;font-size:14px;color:#00d4ff;margin-top:6px;">Colour Tap</div><div style="font-size:11px;color:#9090bb;font-weight:700;margin-top:3px;">Tap the right colour fast!</div></div>
+        <div class="kids-game-card" style="--kgc:#ff7b2c" onclick="openKidsGame('count')"><span style="font-size:40px;">🔢</span><div style="font-family:'Fredoka One',cursive;font-size:14px;color:#ff7b2c;margin-top:6px;">Count It!</div><div style="font-size:11px;color:#9090bb;font-weight:700;margin-top:3px;">Count the bouncing dots!</div></div>
+        <div class="kids-game-card" style="--kgc:#c84bff" onclick="openKidsGame('word')"><span style="font-size:40px;">📝</span><div style="font-family:'Fredoka One',cursive;font-size:14px;color:#c84bff;margin-top:6px;">Word Scramble</div><div style="font-size:11px;color:#9090bb;font-weight:700;margin-top:3px;">Unscramble the word!</div></div>
+      </div>
+    </div>
+    <div id="kids-feelings" class="kids-section" style="display:none;">
+      <div class="card" style="border:2px solid #00ffaa;">
+        <div style="font-family:'Fredoka One',cursive;font-size:18px;color:#00ffaa;margin-bottom:12px;text-align:center;">💚 How are you feeling right now?</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+          <button class="feeling-btn" onclick="showFeeling('Happy','#ffe600','😄','Being happy means your brain is making feel-good chemicals. When we feel happy it is easier to focus and try new things. Keep doing what makes you smile!')">😄<br>Happy</button>
+          <button class="feeling-btn" onclick="showFeeling('Sad','#00d4ff','😢','Feeling sad is completely normal. Everyone feels sad sometimes. Talking to someone you trust, drawing your feelings, or having a cuddle can really help.')">😢<br>Sad</button>
+          <button class="feeling-btn" onclick="showFeeling('Angry','#ff2d78','😠','Anger is a really big feeling and it is okay to have it. Try squeezing something soft, taking five big deep breaths, or going for a quick walk to move that energy.')">😠<br>Angry</button>
+          <button class="feeling-btn" onclick="showFeeling('Worried','#c84bff','😰','Worrying means your brain is trying to look after you. Breathe in slowly for 4 counts, hold for 4, breathe out for 4. This tells your brain everything is safe.')">😰<br>Worried</button>
+          <button class="feeling-btn" onclick="showFeeling('Excited','#ff7b2c','🤩','Excitement is amazing energy! Channel it into something fun like jumping around, drawing, or telling someone what you are so excited about!')">🤩<br>Excited</button>
+          <button class="feeling-btn" onclick="showFeeling('Overwhelmed','#ff99ff','😵','When everything feels like too much, find one thing you can see, one thing you can touch, and take one big breath. One small step at a time.')">😵<br>Too Much</button>
+        </div>
+        <div id="feelingResult" style="display:none;border-radius:14px;padding:14px;border:2px solid #00ffaa;animation:fadeIn 0.4s ease;">
+          <div id="feelingTitle" style="font-family:'Fredoka One',cursive;font-size:18px;margin-bottom:6px;"></div>
+          <div id="feelingBody" style="font-size:13px;color:#c0b8e8;font-weight:700;line-height:1.7;"></div>
+        </div>
+      </div>
+    </div>
+    <div id="kids-activities" class="kids-section" style="display:none;">
+      <div class="card" style="border:2px solid #00d4ff;text-align:center;padding:24px 18px;">
+        <div id="actEmoji" style="font-size:52px;margin-bottom:10px;">🎲</div>
+        <div id="actTitle" style="font-family:'Fredoka One',cursive;font-size:20px;color:#00d4ff;margin-bottom:8px;">Tap for a fun activity!</div>
+        <div id="actBody" style="font-size:14px;color:#c0b8e8;font-weight:700;line-height:1.7;margin-bottom:10px;min-height:50px;"></div>
+        <div id="actChallenge" style="background:rgba(0,212,255,0.08);border:2px solid rgba(0,212,255,0.3);border-radius:12px;padding:10px 14px;font-size:12px;font-weight:800;color:#00d4ff;display:none;"></div>
+      </div>
+      <button onclick="nextKidsActivity()" style="width:100%;background:#00d4ff;border:none;border-radius:14px;padding:13px;font-family:'Fredoka One',cursive;font-size:16px;color:#000;cursor:pointer;margin-bottom:14px;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">🎲 New Activity!</button>
+    </div>
+    <div id="kids-superpowers" class="kids-section" style="display:none;">
+      <div class="card" style="border:2px solid #ff7b2c;text-align:center;padding:24px 18px;cursor:pointer;" onclick="nextKidsSuperpower()">
+        <div id="spEmoji" style="font-size:52px;margin-bottom:10px;animation:bop 1.5s infinite ease-in-out;">⚡</div>
+        <div id="spTitle" style="font-family:'Fredoka One',cursive;font-size:20px;color:#ff7b2c;margin-bottom:8px;">Tap to discover your superpower!</div>
+        <div id="spBody" style="font-size:14px;color:#c0b8e8;font-weight:700;line-height:1.7;min-height:60px;"></div>
+      </div>
+      <button onclick="nextKidsSuperpower()" style="width:100%;background:#ff7b2c;border:none;border-radius:14px;padding:13px;font-family:'Fredoka One',cursive;font-size:16px;color:#000;cursor:pointer;margin-bottom:14px;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">⚡ Next Superpower!</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Kids Game Modal -->
+
+<div id="kidsGameModal" style="position:fixed;inset:0;background:rgba(7,7,26,0.96);z-index:250;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;">
+  <div id="kidsGameBox" style="background:var(--panel);border-radius:24px;padding:24px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;border:2px solid #ff99ff;box-shadow:0 20px 60px rgba(0,0,0,0.7);transform:scale(0.9);transition:transform 0.3s;"></div>
+</div>
+
+<!-- OVERSTIM OVERLAY -->
+
+<div id="overstimOverlay" style="position:fixed;inset:0;z-index:600;display:none;overflow:hidden;">
+  <canvas id="overstimCanvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  <div id="overstimThoughts" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
+  <div id="overstimNumbers" style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:20px;"></div>
+  <button id="overstimExit" onclick="stopOverstim()" style="position:fixed;top:16px;right:16px;z-index:700;background:rgba(0,0,0,0.8);border:3px solid #fff;border-radius:99px;padding:10px 20px;font-family:'Fredoka One',cursive;font-size:15px;color:#fff;cursor:pointer;box-shadow:0 0 20px rgba(255,255,255,0.5);animation:exitPulse 1s infinite alternate;">🚪 EXIT OVERSTIM</button>
+</div>
+
+<!-- OVERSTIM WARNING MODAL -->
+
+<div id="overstimWarning" style="position:fixed;inset:0;z-index:650;background:rgba(7,7,26,0.97);display:none;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--panel);border-radius:24px;padding:28px;max-width:440px;width:100%;border:2px solid var(--orange);box-shadow:0 0 40px rgba(255,123,44,0.3);text-align:center;">
+    <div style="font-size:48px;margin-bottom:12px;">⚠️</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:22px;color:var(--orange);margin-bottom:10px;">You're About to Overstimulate the ADHD Brain</div>
+    <div style="font-size:13px;color:#b0a8d8;line-height:1.7;margin-bottom:16px;">This experience simulates what sensory overload can feel like for an ADHD brain — multiple inputs, flashing colours, movement, and noise all at once.</div>
+    <div style="background:rgba(255,45,120,0.1);border:2px solid var(--pink);border-radius:14px;padding:14px;margin-bottom:18px;text-align:left;">
+      <div style="font-family:'Fredoka One',cursive;font-size:14px;color:var(--pink);margin-bottom:8px;">⚡ Please be advised:</div>
+      <div style="font-size:12px;color:#c0b8e8;font-weight:700;line-height:1.8;">
+        🔴 Contains rapidly flashing colours and lights<br>
+        🔴 Contains fast moving objects on screen<br>
+        🔴 Contains loud visual noise and rapid text<br>
+        🔴 Not recommended if you are sensitive to flashing imagery or have photosensitive epilepsy<br>
+        🟢 An EXIT button will always be visible to leave at any time
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button onclick="document.getElementById('overstimWarning').style.display='none'" style="background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);border-radius:99px;padding:11px 24px;font-family:'Fredoka One',cursive;font-size:14px;color:#9090bb;cursor:pointer;">Go Back</button>
+      <button onclick="confirmOverstim()" style="background:var(--orange);border:none;border-radius:99px;padding:11px 28px;font-family:'Fredoka One',cursive;font-size:14px;color:#000;cursor:pointer;box-shadow:0 0 20px rgba(255,123,44,0.4);">I'm Ready ⚡</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// STARFIELD
+const sf=document.getElementById('starfield');
+for(let i=0;i<100;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2.5+0.5;s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${1.5+Math.random()*3}s;--dl:${Math.random()*4}s;`;sf.appendChild(s);}
+
+// FLOATING THOUGHTS
+const floatWords=['wait','???','oh!','idea!','focus','nope','later','...','WHY','oops','lol','slay','✨','help','next?','omg','also','but wait','nvm','almost'];
+const floatColors=[{bg:'rgba(255,45,120,0.18)',c:'#ff2d78',b:'#ff2d78'},{bg:'rgba(0,212,255,0.18)',c:'#00d4ff',b:'#00d4ff'},{bg:'rgba(255,230,0,0.18)',c:'#ffe600',b:'#ffe600'},{bg:'rgba(0,255,170,0.18)',c:'#00ffaa',b:'#00ffaa'},{bg:'rgba(200,75,255,0.18)',c:'#c84bff',b:'#c84bff'}];
+function spawnFloat(){const el=document.createElement('div');el.className='floaty';const fc=floatColors[Math.floor(Math.random()*floatColors.length)];const w=floatWords[Math.floor(Math.random()*floatWords.length)];const dur=8+Math.random()*10;el.style.cssText=`left:${Math.random()*88}%;background:${fc.bg};color:${fc.c};border:1px solid ${fc.b};--dur:${dur}s;animation-delay:${Math.random()*2}s;`;el.textContent=w;document.getElementById('floaties').appendChild(el);setTimeout(()=>el.remove(),(dur+3)*1000);}
+setInterval(spawnFloat,1800);
+for(let i=0;i<5;i++) setTimeout(spawnFloat,i*400);
+
+// TABS
+function switchTab(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// NOTIFICATION
+let nTimer;
+function notify(msg,color='#ffe600'){const el=document.getElementById('notif');el.textContent=msg;el.style.setProperty('--notif-color',color);el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(nTimer);nTimer=setTimeout(()=>el.classList.remove('show'),3500);}
+function flashBtn(el){el.classList.remove('btn-flash');void el.offsetWidth;el.classList.add('btn-flash');setTimeout(()=>el.classList.remove('btn-flash'),500);}
+
+// HYPERFOCUS OVERLAY
+let hfStartTime=null, hfTick=null;
+function showHyperfocus(){
+  // Add stars to overlay
+  const hfS=document.getElementById('hfStars');
+  hfS.innerHTML='';
+  for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+0.5;s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${1+Math.random()*2.5}s;--dl:${Math.random()*3}s;`;hfS.appendChild(s);}
+  document.getElementById('hyperfocusOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  hfStartTime=Date.now();
+  hfTick=setInterval(()=>{
+    const secs=Math.floor((Date.now()-hfStartTime)/1000);
+    const mins=Math.floor(secs/60);
+    const display=mins>0?`${mins}m ${secs%60}s`:`${secs}s`;
+    document.getElementById('hfTimer').textContent=`You've been in the zone for: ${display}`;
+  },1000);
+}
+function exitHyperfocus(){
+  document.getElementById('hyperfocusOverlay').classList.remove('active');
+  document.body.style.overflow='';
+  clearInterval(hfTick);
+  const secs=Math.floor((Date.now()-hfStartTime)/1000);
+  notify(`👋 Back to reality. That was ${secs} seconds in the zone.`,'#00d4ff');
+  // Switch back to chaos mode visually
+  const chaosBtn=document.querySelector('[data-m="chaos"]');
+  setMode('chaos',chaosBtn);
+}
+
+// BRAIN MODES
+const modeData={
+  chaos:{emoji:'😵‍💫',name:'CHAOS',desc:'50 tabs open. Brain is running 47 simultaneous trains of thought. None of them are on the right track. All of them feel urgent.',focus:10,energy:72,emotion:80,chaos:92,thoughts:['wait what was i doing','oh SHINY','new business idea!!','did i eat today','50 tabs open','anyway','THE TAXES','where did 3hrs go','what if i just'],brainColor:'#ff2d78',notif:'🌀 50 tabs open. All feel urgent. None are open.'},
+  hyper:{emoji:'🔵',name:'HYPERFOCUS',desc:'Time doesn\'t exist. Food doesn\'t exist. You are ONE with the task. It has been 5 hours. This is illegal levels of productivity. Do not disturb.',focus:99,energy:95,emotion:40,chaos:28,thoughts:['just one more hour','time is fake','i am the task','do not talk to me','almost there','OPTIMAL','i forgot to eat','nothing else exists'],brainColor:'#00d4ff',notif:'🔵 Entering the zone...'},
+  crash:{emoji:'💤',name:'CRASHED',desc:'Hyperfocus hangover. Brain.exe has stopped responding. Everything feels heavy. Just five more minutes. It has been 40 minutes.',focus:3,energy:6,emotion:20,chaos:14,thoughts:['...','everything is heavy','brain no worky','5 more mins','i tried','cannot','nope','where am i','meh'],brainColor:'#8888bb',notif:'💤 Brain.exe has stopped responding.'},
+  anxiety:{emoji:'😰',name:'ANXIETY',desc:'Did I say something wrong? They definitely hate me now. What if everything fails? Why is my brain like a smoke alarm going off because of toast?',focus:28,energy:88,emotion:99,chaos:84,thoughts:['did i say something wrong','they hate me','what if it fails','brain is screaming','WHY','worst case scenario only','catastrophising again','i am fine 🙂'],brainColor:'#ff7b2c',notif:'😰 Catastrophe probability: 100%. Actual: 3%.'},
+  vibe:{emoji:'✨',name:'VIBING',desc:'Wait... am I actually functioning? List made AND ticked? Dopamine fully unlocked. This is rare. Capture it. Document it. Cherish it.',focus:65,energy:75,emotion:72,chaos:26,thoughts:['actually feeling good??','rare form','i made a list!','i ticked the list!','dopamine unlocked','things are okay','go off bestie','productive era'],brainColor:'#00ffaa',notif:'✨ Rare sighting: a functioning human.'},
+  rsd:{emoji:'💔',name:'RSD MODE',desc:'Rejection Sensitive Dysphoria activated. Someone\'s tone of voice was slightly off. Internal nuclear meltdown initiated. It\'s fine. (It is not fine.)',focus:5,energy:32,emotion:99,chaos:74,thoughts:['they definitely hate me','that tone tho','i ruin everything','it\'s fine (it\'s not)','overthinking x1000','why am i like this','deleted msg 4 times','internal screaming'],brainColor:'#c84bff',notif:'💔 Someone breathed slightly wrong. Full spiral.'}
+};
+let currentMode='chaos';
+function setMode(m,btn){
+  currentMode=m;
+  const d=modeData[m];
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('bEmoji').textContent=d.emoji;
+  document.getElementById('bName').textContent=d.name;
+  document.getElementById('modeDesc').textContent=d.desc;
+  document.querySelector('.brain-svg').style.filter=`drop-shadow(0 0 30px ${d.brainColor})`;
+  document.getElementById('brainPath').setAttribute('stroke',d.brainColor);
+  setBar('focus',d.focus,'var(--blue)');
+  setBar('energy',d.energy,'var(--green)');
+  setBar('emotion',d.emotion,'var(--pink)');
+  document.getElementById('chaosBar').style.width=d.chaos+'%';
+  document.getElementById('chaosNum').textContent=d.chaos+'%';
+  renderThoughts(m);
+  notify(d.notif,d.brainColor);
+  if(m==='hyper') setTimeout(showHyperfocus,700);
+}
+function setBar(name,val,color){document.getElementById(name+'Bar').style.width=val+'%';document.getElementById(name+'Bar').style.background=color;document.getElementById(name+'Val').textContent=val+'%';document.getElementById(name+'Val').style.color=color;}
+const tagColors=[{bg:'rgba(255,45,120,0.18)',c:'#ff2d78'},{bg:'rgba(0,212,255,0.18)',c:'#00d4ff'},{bg:'rgba(255,230,0,0.18)',c:'#ffe600'},{bg:'rgba(0,255,170,0.18)',c:'#00ffaa'},{bg:'rgba(200,75,255,0.18)',c:'#c84bff'},{bg:'rgba(255,123,44,0.18)',c:'#ff7b2c'}];
+function renderThoughts(m){const list=document.getElementById('thoughtTags');list.innerHTML='';const ts=[...modeData[m].thoughts].sort(()=>Math.random()-.5).slice(0,6);ts.forEach((t,i)=>{const tag=document.createElement('div');tag.className='ttag';const c=tagColors[i%tagColors.length];tag.style.cssText=`background:${c.bg};color:${c.c};animation-delay:${i*0.07}s`;tag.textContent=t;list.appendChild(tag);});}
+function newThought(btn){const d=modeData[currentMode];const t=d.thoughts[Math.floor(Math.random()*d.thoughts.length)];const list=document.getElementById('thoughtTags');const tag=document.createElement('div');tag.className='ttag';const c=tagColors[Math.floor(Math.random()*tagColors.length)];tag.style.cssText=`background:${c.bg};color:${c.c}`;tag.textContent=t;list.prepend(tag);const chaos=Math.min(99,parseInt(document.getElementById('chaosNum').textContent)+6);document.getElementById('chaosBar').style.width=chaos+'%';document.getElementById('chaosNum').textContent=chaos+'%';notify(`💭 "${t}"`,c.c);if(btn)flashBtn(btn);}
+// GROUNDING MODAL
+function openGrounding(){
+  // Build and show the modal
+  let gModal=document.getElementById('groundingModal');
+  if(!gModal){
+    gModal=document.createElement('div');
+    gModal.id='groundingModal';
+    gModal.style.cssText='position:fixed;inset:0;background:rgba(7,7,26,0.97);z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity 0.35s;';
+    document.body.appendChild(gModal);
+  }
+  gModal.innerHTML=buildGroundingHTML();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>gModal.style.opacity='1'));
+  groundingStep=0;
+  groundingAnswers=[];
+  showGroundingStep();
+}
+function closeGrounding(){
+  const gModal=document.getElementById('groundingModal');
+  if(!gModal)return;
+  gModal.style.opacity='0';
+  setTimeout(()=>gModal.remove(),350);
+  // Bring chaos down a little as a reward
+  const chaos=Math.max(10,parseInt(document.getElementById('chaosNum').textContent)-28);
+  document.getElementById('chaosBar').style.width=chaos+'%';
+  document.getElementById('chaosNum').textContent=chaos+'%';
+  setBar('focus',Math.min(99,parseInt(document.getElementById('focusVal').textContent)+20),'var(--blue)');
+  notify('🌿 Brain chaos reduced. Nice work.','#00d4ff');
+}
+function buildGroundingHTML(){
+  return `<div style="background:var(--panel);border-radius:24px;padding:26px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;border:2px solid var(--blue);box-shadow:0 20px 60px rgba(0,0,0,0.8),0 0 30px rgba(0,212,255,0.15);">
+    <button onclick="closeGrounding()" style="float:right;background:rgba(0,212,255,0.15);border:2px solid rgba(0,212,255,0.3);border-radius:99px;width:32px;height:32px;font-size:16px;cursor:pointer;color:var(--white);display:flex;align-items:center;justify-content:center;">✕</button>
+    <div style="font-family:'Fredoka One',cursive;font-size:22px;color:var(--blue);margin-bottom:6px;">🌿 5-4-3-2-1 Grounding</div>
+    <div style="font-size:12px;color:#9090bb;font-weight:700;margin-bottom:18px;">Type each answer and press Enter or tap the tick. Your brain can only notice so many things at once — this pulls it into the present moment.</div>
+    <div id="groundingStepWrap"></div>
+    <div id="groundingAnswerList" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;"></div>
+    <div id="groundingComplete" style="display:none;text-align:center;padding-top:10px;">
+      <div style="font-size:36px;margin-bottom:8px;">✨</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--green);margin-bottom:10px;">Well done — you just grounded the brain.</div>
+      <div style="font-size:13px;color:#b0a8d8;line-height:1.65;margin-bottom:16px;">The 5-4-3-2-1 technique works because noticing your senses activates the prefrontal cortex — the thinking part of the brain — and quiets the amygdala, which drives panic and overwhelm. That was a genuine nervous system reset.</div>
+      <button onclick="closeGrounding()" style="background:var(--green);border:none;border-radius:99px;padding:12px 30px;font-family:'Fredoka One',cursive;font-size:16px;color:#000;cursor:pointer;">Done 🌿</button>
+    </div>
+  </div>`;
+}
+
+const groundingSteps=[
+  {count:5,sense:'see',emoji:'👀',prompt:'Name 5 things you can SEE right now',color:'#00d4ff',placeholder:'e.g. a cup, a window...'},
+  {count:4,sense:'touch',emoji:'🤚',prompt:'Name 4 things you can FEEL or TOUCH',color:'#c84bff',placeholder:'e.g. my chair, my sleeve...'},
+  {count:3,sense:'hear',emoji:'👂',prompt:'Name 3 things you can HEAR',color:'#ffe600',placeholder:'e.g. traffic, my breathing...'},
+  {count:2,sense:'smell',emoji:'👃',prompt:'Name 2 things you can SMELL',color:'#ff7b2c',placeholder:'e.g. coffee, fresh air... (even faint ones count!)'},
+  {count:1,sense:'taste',emoji:'👅',prompt:'Name 1 thing you can TASTE',color:'#00ffaa',placeholder:'e.g. toothpaste, a drink...'},
+];
+let groundingStep=0, groundingAnswers=[], groundingStepAnswers=[];
+
+function showGroundingStep(){
+  const wrap=document.getElementById('groundingStepWrap');
+  if(!wrap)return;
+  if(groundingStep>=groundingSteps.length){
+    wrap.innerHTML='';
+    document.getElementById('groundingComplete').style.display='block';
+    return;
+  }
+  const s=groundingSteps[groundingStep];
+  groundingStepAnswers=[];
+  wrap.innerHTML=`
+    <div style="background:rgba(0,212,255,0.05);border-radius:16px;padding:16px;border:2px solid var(--blue);box-shadow:0 0 16px rgba(0,212,255,0.1);">
+      <div style="font-family:'Fredoka One',cursive;font-size:18px;color:${s.color};margin-bottom:4px;">${s.emoji} ${s.prompt}</div>
+      <div style="font-size:11px;color:#9090bb;font-weight:700;margin-bottom:14px;">${s.count - groundingStepAnswers.length} more to go</div>
+      <div id="stepAnswers" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:28px;"></div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input id="groundingInput" type="text" maxlength="40" placeholder="${s.placeholder}"
+          style="flex:1;background:rgba(255,255,255,0.07);border:2px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--white);outline:none;transition:border-color 0.2s;"
+          onfocus="this.style.borderColor='${s.color}'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"
+          onkeydown="if(event.key==='Enter')submitGroundingAnswer()">
+        <button onclick="submitGroundingAnswer()" style="background:${s.color};border:none;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer;transition:transform 0.15s;flex-shrink:0;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">✓</button>
+      </div>
+      <div id="groundingFeedback" style="font-size:12px;font-weight:700;margin-top:8px;min-height:18px;color:${s.color};"></div>
+    </div>
+  `;
+  // No autofocus — prevents the mobile keyboard immediately covering the content
+}
+
+function submitGroundingAnswer(){
+  const input=document.getElementById('groundingInput');
+  if(!input)return;
+  const val=input.value.trim();
+  if(!val){
+    document.getElementById('groundingFeedback').textContent='Type something — anything you notice counts!';
+    return;
+  }
+  const s=groundingSteps[groundingStep];
+  groundingStepAnswers.push(val);
+  groundingAnswers.push({sense:s.sense,val,color:s.color});
+  input.value='';
+
+  // Show answer as a tag
+  const stepAnswersEl=document.getElementById('stepAnswers');
+  const tag=document.createElement('div');
+  tag.style.cssText=`background:rgba(${s.color==='#00d4ff'?'0,212,255':s.color==='#c84bff'?'200,75,255':s.color==='#ffe600'?'255,230,0':s.color==='#ff7b2c'?'255,123,44':'0,255,170'},0.15);color:${s.color};border-radius:99px;padding:4px 12px;font-size:11px;font-weight:800;animation:tagPop 0.3s cubic-bezier(.34,1.56,.64,1) both;`;
+  tag.textContent='✓ '+val;
+  stepAnswersEl.appendChild(tag);
+
+  const remaining=s.count-groundingStepAnswers.length;
+  const feedbacks=['Nice one!','Good, keep going.','You got this.','Almost there!','That counts!','Great noticing.','Yes, that works.'];
+  document.getElementById('groundingFeedback').textContent=remaining>0
+    ? feedbacks[Math.floor(Math.random()*feedbacks.length)]+` ${remaining} more to go.`
+    : '';
+
+  // Update counter
+  const wrap=document.getElementById('groundingStepWrap');
+  if(wrap){const ctr=wrap.querySelector('div[style*="11px"]');if(ctr)ctr.textContent=`${remaining} more to go`;}
+
+  if(groundingStepAnswers.length>=s.count){
+    document.getElementById('groundingFeedback').textContent='Step complete! Moving on...';
+    setTimeout(()=>{groundingStep++;showGroundingStep();},800);
+  } else {
+    document.getElementById('groundingInput').focus();
+  }
+}
+function squirrel(btn){const ds=['You opened YouTube. 47 mins gone.','Started reorganising your desk.','New side project launched mentally.','Wikipedia rabbit hole: 90 mins.','Cleaned the whole house to avoid one task.','Spent 20 mins picking a playlist.'];notify('🐿️ '+ds[Math.floor(Math.random()*ds.length)],'#ff7b2c');setBar('focus',2,'var(--blue)');const chaos=Math.min(99,parseInt(document.getElementById('chaosNum').textContent)+22);document.getElementById('chaosBar').style.width=chaos+'%';document.getElementById('chaosNum').textContent=chaos+'%';for(let i=0;i<6;i++) setTimeout(spawnFloat,i*250);if(btn)flashBtn(btn);}
+setInterval(()=>renderThoughts(currentMode),9000);
+renderThoughts('chaos');
+
+// FUN FACTS
+const facts=[
+  {cat:'science',color:'#00d4ff',emoji:'🔬',label:'Brain Science',title:'The ADHD brain has a dopamine regulation difference',body:'The ADHD brain doesn\'t produce or regulate <strong>dopamine</strong> the same way neurotypical brains do. Dopamine is the brain\'s motivation and reward chemical. In ADHD brains, this system is less efficient, making it genuinely <strong>harder to start tasks</strong> that aren\'t immediately interesting, even important ones.',relatable:"You're not lazy. Your brain literally isn't generating the 'start this now' chemical. That's not a character flaw."},
+  {cat:'science',color:'#c84bff',emoji:'⏰',label:'Brain Science',title:'Time blindness is a real neurological experience',body:'People with ADHD often struggle with <strong>time perception</strong>. The brain has difficulty tracking how long things take, how long ago something happened, or how much time is left. There are literally only two times: <strong>NOW and NOT NOW</strong>. "Tomorrow" and "in an hour" can feel completely identical.',relatable:"Why you're always either 40 minutes early or arriving as it starts. There is no in-between."},
+  {cat:'science',color:'#ff2d78',emoji:'🧩',label:'Brain Science',title:'Working memory is like RAM that keeps crashing',body:'Working memory is your brain\'s short-term workspace. ADHD brains typically have <strong>reduced working memory capacity</strong>, which is why you walk into a room and immediately forget why, lose your train of thought mid-sentence, or open a tab and forget what you were going to search.',relatable:"You opened Google. You stared at it. You have absolutely no idea what you came for."},
+  {cat:'superpowers',color:'#00ffaa',emoji:'⚡',label:'ADHD Superpower',title:'Hyperfocus: the other side of distraction',body:'Hyperfocus is the ability to become <strong>completely absorbed</strong> in a task for hours, losing track of time, hunger, and everything else. When an ADHD brain finds something genuinely stimulating, it can produce <strong>extraordinary levels of focus and output</strong> that most neurotypical people can\'t match.',relatable:"You said 'five more minutes' 4 hours ago. You have produced more in one sitting than some people do in a week."},
+  {cat:'superpowers',color:'#ffe600',emoji:'💡',label:'ADHD Superpower',title:'ADHD brains are wired for creative thinking',body:'Studies show that people with ADHD often score higher on <strong>divergent thinking</strong>, the ability to generate many ideas quickly and make unexpected connections. The same brain that\'s distracted by everything is also the brain that <strong>notices things others miss</strong> and links concepts in unexpected ways.',relatable:"Your 'random' ideas that everyone dismisses? Some of them are genuinely brilliant. The chaos has a purpose."},
+  {cat:'superpowers',color:'#ff7b2c',emoji:'🚒',label:'ADHD Superpower',title:'ADHD brains can thrive under pressure',body:'Many ADHD brains find that <strong>deadlines, urgency and high stakes</strong> actually produce focus because they create the adrenaline-and-dopamine cocktail the brain needs to engage. It\'s why so many people with ADHD do their best work close to a deadline.',relatable:"The deadline IS the dopamine. You were just waiting for the right brain chemistry."},
+  {cat:'struggles',color:'#ff2d78',emoji:'💔',label:'Real Struggle',title:'Rejection Sensitive Dysphoria (RSD) is a real thing',body:'RSD is an intense <strong>emotional response to perceived rejection or criticism</strong>, often disproportionate to what happened and hard to control. A slightly flat tone of voice, an unreturned message, or mild criticism can feel physically painful. It\'s one of the least-talked-about parts of ADHD but one of the <strong>most impactful</strong>.',relatable:"Someone used a full stop instead of an exclamation mark in a text. You have been in a spiral for 45 minutes."},
+  {cat:'struggles',color:'#c84bff',emoji:'😴',label:'Real Struggle',title:'The ADHD crash is a real physiological event',body:'After intense focus, social interaction, or emotional exertion, ADHD brains often experience a <strong>full-system shutdown</strong>. The brain burns through its available neurotransmitters and simply runs out. The crash isn\'t laziness. It\'s your brain going into emergency power-saving mode.',relatable:"You did ONE productive thing and now need two hours on the sofa doing nothing. That's valid recovery."},
+  {cat:'struggles',color:'#ff7b2c',emoji:'🔁',label:'Real Struggle',title:'Task initiation: the invisible wall',body:'It\'s not about wanting to do something. It\'s not about knowing it\'s important. <strong>Starting is neurologically harder</strong> for ADHD brains. The brain fails to generate the activation energy needed to begin. You can sit and try to start for 40 minutes and feel genuinely stuck, not because you\'re avoiding it, but because the <strong>brain\'s ignition switch isn\'t firing</strong>.',relatable:"You've been 'about to start' for 2 hours. The task takes 10 minutes. This is ADHD tax."},
+  {cat:'myths',color:'#ffe600',emoji:'💥',label:'Myth Busted',title:'Myth: ADHD is not real, it is just bad parenting',body:'ADHD is one of the <strong>most researched conditions in psychiatry</strong> with decades of neurological, genetic and brain imaging evidence behind it. Brain scans show <strong>measurable structural and functional differences</strong> in ADHD brains. It\'s highly genetic, and if a parent has it, children have a significantly higher chance of having it too.',relatable:"It's as real as it gets. The brain scans don't lie."},
+  {cat:'myths',color:'#00d4ff',emoji:'💥',label:'Myth Busted',title:'Myth: People with ADHD cannot focus on anything',body:'Many people with ADHD can focus <strong>extremely well on things they find stimulating or interesting</strong>. The issue isn\'t an inability to focus. It\'s an <strong>inability to regulate focus</strong>. The brain either locks on completely (hyperfocus) or refuses to engage. There\'s rarely a middle ground.',relatable:"You watched a 4-hour documentary about trains at 2am. You cannot read one work email. Both are true."},
+  {cat:'myths',color:'#00ffaa',emoji:'💥',label:'Myth Busted',title:'Myth: ADHD is a childhood condition you grow out of',body:'While hyperactivity may reduce with age, the <strong>core neurological differences of ADHD persist into adulthood</strong> for the majority of people. Many adults were never diagnosed as children, particularly women, who often present differently. Adult ADHD diagnosis is <strong>increasingly common and well-evidenced</strong>.',relatable:"You were just 'a bit ditzy' or 'too sensitive' your whole life. Turns out: neurodivergent. Mystery solved."},
+];
+let activeCat='all';
+function renderFacts(){const container=document.getElementById('factsContainer');container.innerHTML='';const filtered=activeCat==='all'?facts:facts.filter(f=>f.cat===activeCat);filtered.forEach((f,i)=>{const div=document.createElement('div');div.className='fact-card';div.style.cssText=`--fc:${f.color};animation-delay:${i*0.06}s`;div.innerHTML=`<div class="fact-header"><span class="fact-emoji">${f.emoji}</span><div><div class="fact-label">${f.label}</div><div class="fact-title">${f.title}</div></div></div><div class="fact-body">${f.body}</div><div class="fact-relatable">${f.relatable}</div>`;container.appendChild(div);});}
+function filterFacts(cat,btn){activeCat=cat;document.querySelectorAll('.fcat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderFacts();}
+renderFacts();
+
+// GAMES
+let gameTimer=null,clickScore=0,clickTime=30;
+function openGame(type){const modal=document.getElementById('gameModal');const box=document.getElementById('gameBox');modal.classList.add('open');clearInterval(gameTimer);if(type==='focus')buildFocusGame(box);else if(type==='memory')buildMemoryGame(box);else if(type==='wyr')buildWYR(box);else if(type==='quiz')buildQuiz(box);else if(type==='reaction')buildReactionGame(box);else if(type==='pattern')buildPatternGame(box);}
+function closeGame(){document.getElementById('gameModal').classList.remove('open');clearInterval(gameTimer);clearTimeout(reactionTimeout);stopPatternGame();}
+document.getElementById('gameModal').addEventListener('click',function(e){if(e.target===this)closeGame();});
+
+// FOCUS CLICK GAME (goal: 50 clicks)
+const CLICK_GOAL=50;
+function buildFocusGame(box){
+  clickScore=0;clickTime=30;
+  box.innerHTML=`
+    <button class="close-btn" onclick="closeGame()">✕</button>
+    <div class="game-box-title" style="color:var(--pink)">🎯 Focus Click</div>
+    <div class="game-box-desc">Can you hit the target 50 times in 30 seconds? It jumps every click.</div>
+    <div class="game-score-row">
+      <div class="gscore"><div class="gsl">Clicks</div><div class="gsv" id="cs" style="color:var(--pink)">0 / 50</div></div>
+      <div class="gscore"><div class="gsl">Time Left</div><div class="gsv" id="ct" style="color:var(--yellow)">30s</div></div>
+    </div>
+    <div class="click-progress-wrap"><div class="click-progress-bar" id="clickProg" style="width:0%"></div></div>
+    <div class="click-arena" id="clickArena"><button id="clickTarget" onclick="clickHit()">🎯</button></div>
+    <div id="clickMsg" style="text-align:center;font-family:'Fredoka One',cursive;font-size:14px;min-height:22px;margin-top:8px;"></div>
+  `;
+  moveTarget();
+  gameTimer=setInterval(()=>{clickTime--;document.getElementById('ct').textContent=clickTime+'s';if(clickTime<=0){clearInterval(gameTimer);document.getElementById('clickTarget').style.display='none';const s=clickScore;const reached=s>=CLICK_GOAL;const msg=reached?'🔥 You did it! 50 clicks. Hyperfocus unlocked.':s>=35?`Almost! ${s}/50. Your brain got close.`:s>=20?`${s}/50. Task initiation was the issue, apparently.`:`${s}/50. Did you know the average ADHD brain can take up to 40% longer to process task-switching signals? That's literally what just happened.`;document.getElementById('clickMsg').innerHTML=`<span style="color:${reached?'var(--green)':'var(--yellow)'}">${msg}</span>`;}},1000);
+}
+function moveTarget(){const t=document.getElementById('clickTarget');if(!t)return;const a=document.getElementById('clickArena');const maxX=a.offsetWidth-90,maxY=a.offsetHeight-90;t.style.left=Math.random()*maxX+'px';t.style.top=Math.random()*maxY+'px';}
+function clickHit(){if(clickTime<=0)return;clickScore++;const prog=Math.min(100,(clickScore/CLICK_GOAL)*100);document.getElementById('cs').textContent=`${clickScore} / ${CLICK_GOAL}`;document.getElementById('clickProg').style.width=prog+'%';moveTarget();if(clickScore>=CLICK_GOAL){clearInterval(gameTimer);document.getElementById('clickTarget').style.display='none';document.getElementById('clickMsg').innerHTML=`<span style="color:var(--green)">🔥 50 clicks! Hyperfocus unlocked. You're unstoppable.</span>`;}}
+
+// MEMORY MATCH
+const memEmojis=['🧠','⚡','🌈','🎯','🔥','💡','🎮','🦋'];
+let memCards=[],memFlipped=[],memMatched=0,memLock=false;
+function buildMemoryGame(box){memMatched=0;memFlipped=[];memLock=false;memCards=[...memEmojis,...memEmojis].sort(()=>Math.random()-.5);box.innerHTML=`<button class="close-btn" onclick="closeGame()">✕</button><div class="game-box-title" style="color:var(--blue)">🃏 Memory Match</div><div class="game-box-desc">Find all the pairs. The ADHD twist: can you remember which card was where?</div><div class="memory-grid" id="memGrid"></div><div id="memMsg" style="text-align:center;font-family:'Fredoka One',cursive;font-size:14px;min-height:20px;color:var(--green)"></div>`;const grid=document.getElementById('memGrid');memCards.forEach((e,i)=>{const card=document.createElement('div');card.className='mem-card hidden-face';card.dataset.i=i;card.dataset.e=e;card.textContent='';card.onclick=()=>flipCard(card);grid.appendChild(card);});}
+function flipCard(card){if(memLock||card.classList.contains('flipped')||card.classList.contains('matched'))return;card.classList.add('flipped');card.classList.remove('hidden-face');card.textContent=card.dataset.e;memFlipped.push(card);if(memFlipped.length===2){memLock=true;setTimeout(()=>{const[a,b]=memFlipped;if(a.dataset.e===b.dataset.e){a.classList.add('matched');b.classList.add('matched');memMatched++;if(memMatched===memEmojis.length){document.getElementById('memMsg').textContent='🎉 All matched! Working memory: online.';}}else{a.classList.remove('flipped');b.classList.remove('flipped');a.classList.add('hidden-face');b.classList.add('hidden-face');a.textContent='';b.textContent='';}memFlipped=[];memLock=false;},900);}}
+
+// WOULD YOU RATHER
+const wyrQs=[
+  {q:"Would you rather...",a:"Hyperfocus on ONE task for 8 hours straight with zero hunger or toilet breaks",b:"Have 200 thoughts a second for 8 hours but complete absolutely nothing",ra:"You are literally a laser beam. One thing. Done.",rb:"A full Tuesday, basically."},
+  {q:"Would you rather...",a:"Always be 45 minutes early to everything",b:"Always arrive exactly as it starts with full panic energy",ra:"Time is fake but at least you're not sweating.",rb:"The adrenaline IS the dopamine. This is just life."},
+  {q:"Would you rather...",a:"Remember everything you need to do but be physically unable to start",b:"Start tasks easily but forget what you were doing halfway through",ra:"The invisible wall is REAL and it is exhausting.",rb:"Classic ADHD starter pack. Six half-finished projects."},
+  {q:"Would you rather...",a:"Have ADHD but everyone around you understands it fully",b:"Not have ADHD but have to explain neurodivergence to everyone forever",ra:"Revolutionary concept: being believed.",rb:"'But you don't LOOK like you have ADHD.' OK thanks."},
+  {q:"Would you rather...",a:"Always lose your keys, phone, and wallet but your brain works perfectly",b:"Keep track of all your stuff but constant brain fog forever",ra:"A hook by the door solves keys. Nothing solves the fog.",rb:"Organised chaos. Physically sorted, mentally: missing."},
+  {q:"Would you rather...",a:"Get RSD from strangers only",b:"Get RSD from people you love only",ra:"Every delivery driver's tone now triggers a spiral.",rb:"One slightly flat text from your best friend = full meltdown."},
+];
+let wyrIdx=0;
+function buildWYR(box){wyrIdx=Math.floor(Math.random()*wyrQs.length);renderWYR(box);}
+function renderWYR(box){const q=wyrQs[wyrIdx];box.innerHTML=`<button class="close-btn" onclick="closeGame()">✕</button><div class="game-box-title" style="color:var(--yellow)">🤔 Would You Rather</div><div class="game-box-desc">ADHD edition. There are no good answers here.</div><div class="wyr-box"><div class="wyr-q">${q.q}</div><div class="wyr-options"><div class="wyr-opt" onclick="pickWYR('a',this)">${q.a}</div><div class="wyr-opt" onclick="pickWYR('b',this)">${q.b}</div></div><div class="wyr-result" id="wyrResult"></div><button class="wyr-next" onclick="nextWYR()">Next Question ➡️</button></div>`;}
+function pickWYR(pick,btn){const q=wyrQs[wyrIdx];document.querySelectorAll('.wyr-opt').forEach(o=>o.classList.remove('chose-a','chose-b'));btn.classList.add('chose-'+pick);document.getElementById('wyrResult').textContent=pick==='a'?'👈 '+q.ra:'👉 '+q.rb;}
+function nextWYR(){wyrIdx=(wyrIdx+1)%wyrQs.length;renderWYR(document.getElementById('gameBox'));}
+
+// ADHD TYPE QUIZ
+const quizQs=[
+  {q:"In a meeting, you are most likely to...",opts:["Zone out and miss the key point","Interrupt with a thought that's actually relevant","Doodle intensely while somehow retaining everything","Panic about something unrelated and miss it anyway"],scores:[2,1,2,3]},
+  {q:"Your bedroom or workspace is...",opts:["A creative explosion only you understand","Tidy on the outside, chaos in your brain","Spotless when anxious, destroyed when hyperfocused","What is a workspace"],scores:[1,2,3,2]},
+  {q:"When a task is due tomorrow, you...",opts:["Start it tonight because NOW is the only time","Started it two weeks ago and can't stop","Knew about it for a month and start at 11pm","What task"],scores:[1,3,2,1]},
+  {q:"How does your energy move through the day?",opts:["Steady-ish with random crashes","Bursts of absolute chaos then dead","On fire until 2am then useless until noon","I have no idea, time is fake"],scores:[2,1,3,2]},
+  {q:"The phrase 'just try harder' makes you feel...",opts:["Genuinely hurt. I AM trying.","Confused. Harder than what, exactly?","Angry. You have no idea.","Laughed and cried at the same time"],scores:[3,2,1,2]},
+];
+let quizAnswers=[],quizQ=0;
+function buildQuiz(box){quizAnswers=[];quizQ=0;renderQuizQ(box);}
+function renderQuizQ(box){if(quizQ>=quizQs.length){showQuizResult(box);return;}const q=quizQs[quizQ];const prog=Math.round((quizQ/quizQs.length)*100);box.innerHTML=`<button class="close-btn" onclick="closeGame()">✕</button><div class="game-box-title" style="color:var(--purple)">🧩 What's Your ADHD Type?</div><div class="game-box-desc">Question ${quizQ+1} of ${quizQs.length}</div><div class="quiz-progress"><div class="quiz-prog-fill" style="width:${prog}%"></div></div><div class="quiz-q">${q.q}</div><div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQuiz(${i},this)">${o}</button>`).join('')}</div>`;}
+function answerQuiz(i,btn){document.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');quizAnswers.push(quizQs[quizQ].scores[i]);quizQ++;setTimeout(()=>renderQuizQ(document.getElementById('gameBox')),350);}
+function showQuizResult(box){const total=quizAnswers.reduce((a,b)=>a+b,0);const avg=total/quizAnswers.length;let type,desc;if(avg<1.7){type="⚡ Hyperactive-Impulsive Type";desc="Your brain moves fast. You think fast, talk fast, act fast, sometimes before the plan is finished. You're the one who blurts out the answer and also the wrong answer in the same breath. High energy, high creativity, high 'wait I didn't think this through'.";}else if(avg<2.4){type="🌊 Inattentive Type";desc="Your chaos is internal. You can seem calm on the outside while your brain is running 47 background programmes. Easily overwhelmed, easily distracted, brilliant at deep thinking when something clicks, and often invisible to people who only see the quiet exterior.";}else{type="🌀 Combined Type";desc="You got the full package. Inattentive AND hyperactive, meaning you can zone out completely AND be all over the place at the same time. Exhausting? Yes. It also means you have access to the full spectrum of ADHD traits when conditions are right.";}box.innerHTML=`<button class="close-btn" onclick="closeGame()">✕</button><div class="game-box-title" style="color:var(--purple)">🧩 Your Result</div><div class="quiz-result show"><div class="qrt">${type}</div><p>${desc}</p><p style="margin-top:12px;font-size:11px;opacity:0.6">This is a fun exploration, not a clinical diagnosis. A proper assessment is always the way to go for official answers.</p></div><br><button class="genbtn" style="background:var(--purple);color:#fff;width:100%" onclick="buildQuiz(document.getElementById('gameBox'))">Retake Quiz 🔄</button>`;}
+
+// REACTION TIME GAME
+let reactionState='idle',reactionTimeout=null,reactionStart=null,reactionTimes=[];
+function buildReactionGame(box){
+  reactionState='idle';reactionTimes=[];reactionStart=null;
+  box.innerHTML=`
+    <button class="close-btn" onclick="closeGame()">✕</button>
+    <div class="game-box-title" style="color:var(--green)">⚡ Reaction Time</div>
+    <div class="game-box-desc">Wait for the screen to turn green then tap as fast as you can. 5 rounds. No cheating.</div>
+    <div class="reaction-screen wait" id="reactionScreen" onclick="reactionClick()">
+      <span style="font-size:36px">🔴</span>
+      <span>Tap to start...</span>
+    </div>
+    <div id="reactionRound" style="font-family:'Fredoka One',cursive;font-size:13px;color:#9090bb;text-align:center;margin-bottom:8px;"></div>
+    <div class="reaction-times" id="reactionTimes"></div>
+    <div id="reactionMsg" style="text-align:center;font-family:'Fredoka One',cursive;font-size:13px;min-height:20px;"></div>
+  `;
+}
+function reactionClick(){
+  const screen=document.getElementById('reactionScreen');
+  if(!screen)return;
+  if(reactionState==='idle'){
+    reactionState='waiting';
+    screen.className='reaction-screen wait';
+    screen.innerHTML='<span style="font-size:36px">⏳</span><span>Wait for green...</span>';
+    document.getElementById('reactionRound').textContent=`Round ${reactionTimes.length+1} of 5`;
+    const delay=1500+Math.random()*3000;
+    reactionTimeout=setTimeout(()=>{
+      reactionState='ready';
+      reactionStart=Date.now();
+      screen.className='reaction-screen ready';
+      screen.innerHTML='<span style="font-size:36px">🟢</span><span>TAP NOW!</span>';
+    },delay);
+  } else if(reactionState==='waiting'){
+    clearTimeout(reactionTimeout);
+    reactionState='idle';
+    screen.className='reaction-screen too-early';
+    screen.innerHTML='<span style="font-size:36px">😅</span><span>Too early! Tap to try again.</span>';
+  } else if(reactionState==='ready'){
+    const ms=Date.now()-reactionStart;
+    reactionTimes.push(ms);
+    reactionState='idle';
+    const chip=document.createElement('div');chip.className='rt-chip';chip.textContent=ms+'ms';chip.style.color=ms<250?'var(--green)':ms<400?'var(--yellow)':'var(--pink)';document.getElementById('reactionTimes').appendChild(chip);
+    if(reactionTimes.length>=5){
+      const avg=Math.round(reactionTimes.reduce((a,b)=>a+b,0)/reactionTimes.length);
+      screen.className='reaction-screen';screen.style.background='rgba(200,75,255,0.1)';screen.style.borderColor='var(--purple)';
+      screen.innerHTML=`<span style="font-size:36px">🏁</span><span>Done! Average: ${avg}ms</span>`;
+      const msg=avg<220?'Elite reflexes. Hyperfocus may be involved.':avg<300?`${avg}ms average. Research shows ADHD brains often have faster raw reaction times than average. The challenge is consistency.`:avg<450?`${avg}ms. Solid. Did you know dopamine directly affects motor response speed?`:`${avg}ms. Did you know that ADHD brains can have a processing speed difference of up to 40ms compared to neurotypical averages? Completely normal.`;
+      document.getElementById('reactionMsg').innerHTML=`<span style="color:var(--purple)">${msg}</span>`;
+    } else {
+      screen.className='reaction-screen wait';
+      screen.innerHTML=`<span style="font-size:36px">✅</span><span>${ms}ms. Tap for round ${reactionTimes.length+1}.</span>`;
+    }
+  }
+}
+
+// PATTERN MEMORY GAME (Simon Says style)
+const patternEmojis=['🔥','⚡','🌊','🌀','💫','🎯','💥','🦋','🌈'];
+let patternSeq=[],patternUserSeq=[],patternRound=0,patternPlaying=false,patternGameOver=false,patternTimer=null;
+function stopPatternGame(){clearTimeout(patternTimer);patternPlaying=false;}
+function buildPatternGame(box){
+  patternSeq=[];patternUserSeq=[];patternRound=0;patternGameOver=false;
+  box.innerHTML=`
+    <button class="close-btn" onclick="closeGame()">✕</button>
+    <div class="game-box-title" style="color:var(--orange)">🔮 Pattern Memory</div>
+    <div class="game-box-desc">Watch the sequence light up. Then repeat it in order. Each round adds one more.</div>
+    <div class="game-score-row">
+      <div class="gscore"><div class="gsl">Round</div><div class="gsv" id="patRound" style="color:var(--orange)">0</div></div>
+      <div class="gscore"><div class="gsl">Best</div><div class="gsv" id="patBest" style="color:var(--yellow)">0</div></div>
+    </div>
+    <div class="pattern-display" id="patGrid"></div>
+    <div id="patStatus" style="text-align:center;font-family:'Fredoka One',cursive;font-size:14px;min-height:22px;color:#9090bb;">Tap Start to begin</div>
+    <br>
+    <button class="genbtn" id="patStartBtn" style="background:var(--orange);color:#000;width:100%" onclick="startPattern()">Start Pattern</button>
+  `;
+  const grid=document.getElementById('patGrid');
+  patternEmojis.slice(0,9).forEach((e,i)=>{
+    const cell=document.createElement('div');
+    cell.className='pattern-cell';
+    cell.dataset.i=i;
+    cell.textContent=e;
+    cell.onclick=()=>patternCellClick(i);
+    grid.appendChild(cell);
+  });
+}
+let patBest=0;
+function startPattern(){
+  document.getElementById('patStartBtn').style.display='none';
+  patternSeq=[];patternRound=0;patBest=Math.max(patBest,0);
+  nextPatternRound();
+}
+function nextPatternRound(){
+  patternRound++;
+  patternUserSeq=[];
+  document.getElementById('patRound').textContent=patternRound;
+  patternSeq.push(Math.floor(Math.random()*9));
+  document.getElementById('patStatus').textContent='Watch the sequence...';
+  patternPlaying=true;
+  playPatternSeq(0);
+}
+function playPatternSeq(idx){
+  if(idx>=patternSeq.length){patternPlaying=false;document.getElementById('patStatus').textContent='Your turn! Repeat the sequence.';return;}
+  const cells=document.querySelectorAll('.pattern-cell');
+  patternTimer=setTimeout(()=>{
+    cells[patternSeq[idx]].classList.add('lit');
+    patternTimer=setTimeout(()=>{cells[patternSeq[idx]].classList.remove('lit');playPatternSeq(idx+1);},500);
+  },300);
+}
+function patternCellClick(i){
+  if(patternPlaying||patternGameOver)return;
+  const cells=document.querySelectorAll('.pattern-cell');
+  cells[i].classList.add('lit');
+  setTimeout(()=>cells[i].classList.remove('lit'),200);
+  patternUserSeq.push(i);
+  const pos=patternUserSeq.length-1;
+  if(patternUserSeq[pos]!==patternSeq[pos]){
+    patternGameOver=true;
+    cells[i].classList.add('wrong');
+    if(patternRound-1>patBest){patBest=patternRound-1;document.getElementById('patBest').textContent=patBest;}
+    const score=patternRound-1;
+    const msg=score===0?'First round! Did you know short-term memory can be genuinely impaired by high cortisol levels?':score<3?`Round ${score}. Did you know the ADHD brain holds on average 30% less information in working memory at any one time?`:score<6?`Round ${score}. Working memory is genuinely harder to sustain with ADHD. This isn't a game you were designed to win easily.`:`Round ${score}! That's impressive recall for a brain that supposedly "can't pay attention".`;
+    document.getElementById('patStatus').innerHTML=`<span style="color:var(--pink)">Wrong! You reached round ${score}. ${msg}</span>`;
+    document.getElementById('patStartBtn').textContent='Play Again 🔄';
+    document.getElementById('patStartBtn').style.display='block';
+    document.getElementById('patStartBtn').onclick=()=>{patternGameOver=false;buildPatternGame(document.getElementById('gameBox'));};
+    return;
+  }
+  if(patternUserSeq.length===patternSeq.length){
+    if(patternRound>patBest){patBest=patternRound;document.getElementById('patBest').textContent=patBest;}
+    document.getElementById('patStatus').textContent='Correct! Get ready...';
+    setTimeout(()=>nextPatternRound(),900);
+  }
+}
+
+// BOX BREATHING
+const breathPhases=[{label:'Inhale',cls:'inhale',dur:4,color:'var(--green)'},{label:'Hold',cls:'hold',dur:4,color:'var(--yellow)'},{label:'Exhale',cls:'exhale',dur:4,color:'var(--pink)'},{label:'Hold',cls:'hold',dur:4,color:'var(--blue)'}];
+let breathActive=false,breathPhase=0,breathTick=null,breathSecond=0,breathRounds=0;
+function startBreathing(){
+  breathActive=true;breathPhase=0;breathSecond=0;breathRounds=0;
+  document.getElementById('breathStartBtn').style.display='none';
+  document.getElementById('breathStopBtn').style.display='inline-block';
+  runBreathPhase();
+}
+function stopBreathing(){
+  breathActive=false;clearInterval(breathTick);
+  const ring=document.getElementById('breathRing');
+  ring.className='breath-ring';
+  document.getElementById('breathLabel').textContent='Ready';document.getElementById('breathLabel').style.color='var(--blue)';
+  document.getElementById('breathCount').textContent='4';
+  document.getElementById('breathStartBtn').style.display='inline-block';
+  document.getElementById('breathStopBtn').style.display='none';
+  document.getElementById('breathInstruction').textContent='Box breathing helps slow a racing brain. Each cycle is 16 seconds. Start with 3 rounds and build from there.';
+  document.getElementById('breathRoundsDisplay').textContent='';
+  document.querySelectorAll('.breath-step').forEach((s,i)=>{s.classList.toggle('current',i===0);});
+}
+function runBreathPhase(){
+  if(!breathActive)return;
+  const p=breathPhases[breathPhase];
+  breathSecond=p.dur;
+  const ring=document.getElementById('breathRing');
+  ring.className='breath-ring '+p.cls;
+  document.getElementById('breathLabel').textContent=p.label;
+  document.getElementById('breathLabel').style.color=p.color;
+  document.getElementById('breathCount').textContent=breathSecond;
+  document.querySelectorAll('.breath-step').forEach((s,i)=>s.classList.toggle('current',i===breathPhase));
+  clearInterval(breathTick);
+  breathTick=setInterval(()=>{
+    breathSecond--;
+    if(breathSecond<=0){
+      clearInterval(breathTick);
+      breathPhase=(breathPhase+1)%breathPhases.length;
+      if(breathPhase===0){
+        breathRounds++;
+        document.getElementById('breathRoundsDisplay').textContent=`Rounds completed: ${breathRounds}`;
+        if(breathRounds===1) document.getElementById('breathInstruction').textContent='Good. Keep going. The nervous system starts to settle after round 2.';
+        if(breathRounds===3) document.getElementById('breathInstruction').textContent='Three rounds. Cortisol is dropping. This is working.';
+        if(breathRounds===5) document.getElementById('breathInstruction').textContent='Five rounds. You can stop here or keep going. Your nervous system thanks you.';
+      }
+      runBreathPhase();
+    } else {
+      document.getElementById('breathCount').textContent=breathSecond;
+    }
+  },1000);
+}
+
+// Synapse animation
+document.head.insertAdjacentHTML('beforeend',`<style>#s1{animation:sf 0.7s infinite alternate}#s2{animation:sf 1.0s .2s infinite alternate}#s3{animation:sf 0.9s .4s infinite alternate}#s4{animation:sf 1.2s .1s infinite alternate}#s5{animation:sf 0.6s .5s infinite alternate}@keyframes sf{from{opacity:.2;r:2}to{opacity:1;r:5}}</style>`);
+
+// ===== OVERSTIM =====
+function startOverstimWarning(){
+document.getElementById(‘overstimWarning’).style.display=‘flex’;
+}
+function confirmOverstim(){
+document.getElementById(‘overstimWarning’).style.display=‘none’;
+launchOverstim();
+}
+
+let overstimInterval=[], overstimRAF=null, overstimBalls=[];
+const overstimColors=[’#ff2d78’,’#00d4ff’,’#ffe600’,’#00ffaa’,’#c84bff’,’#ff7b2c’,’#ff99cc’,’#33ffee’];
+const overstimThoughtWords=[‘TOO MUCH’,‘WAIT’,‘ALL AT ONCE’,‘NOISE’,‘MAKE IT STOP’,‘SO BRIGHT’,‘OVERLOAD’,‘WHAT IS HAPPENING’,‘FOCUS?? LOL’,‘100 THINGS’,‘NOW NOW NOW’,‘TOO FAST’,‘OVERWHELMED’,‘EVERYWHERE’,‘CAN'T FILTER’,‘SENSORY!!’,‘BRAIN FULL’,‘INPUT INPUT’,‘PROCESSING…’,‘ABORT MISSION’];
+
+function launchOverstim(){
+// Shake the whole page
+document.body.classList.add(‘screen-shake’);
+setTimeout(()=>document.body.classList.remove(‘screen-shake’),600);
+
+const overlay=document.getElementById(‘overstimOverlay’);
+overlay.style.display=‘block’;
+
+// Canvas setup for bouncing balls + fireworks
+const canvas=document.getElementById(‘overstimCanvas’);
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+const ctx=canvas.getContext(‘2d’);
+
+// Create balls
+overstimBalls=[];
+for(let i=0;i<18;i++){
+const r=18+Math.random()*28;
+overstimBalls.push({
+x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*12, vy:(Math.random()-0.5)*12,
+r, color:overstimColors[Math.floor(Math.random()*overstimColors.length)],
+trail:[]
+});
+}
+
+// Firework particles
+let particles=[];
+function spawnFirework(){
+const x=Math.random()*canvas.width, y=Math.random()*canvas.height*0.6;
+const color=overstimColors[Math.floor(Math.random()*overstimColors.length)];
+for(let i=0;i<30;i++){
+const angle=Math.random()*Math.PI*2, speed=2+Math.random()*6;
+particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,color,life:1,r:3+Math.random()*3});
+}
+}
+
+let flashHue=0, frameCount=0;
+function draw(){
+flashHue=(flashHue+3)%360;
+frameCount++;
+
+```
+// Flashing background
+ctx.fillStyle=`hsla(${flashHue},80%,8%,0.25)`;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+// Balls
+overstimBalls.forEach(b=>{
+  b.trail.push({x:b.x,y:b.y});
+  if(b.trail.length>10)b.trail.shift();
+  // Draw trail
+  b.trail.forEach((pt,i)=>{
+    ctx.beginPath();ctx.arc(pt.x,pt.y,b.r*(i/b.trail.length)*0.7,0,Math.PI*2);
+    ctx.fillStyle=b.color+'44';ctx.fill();
+  });
+  // Draw ball
+  ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+  ctx.fillStyle=b.color;ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  // Glow
+  ctx.shadowBlur=20;ctx.shadowColor=b.color;
+  ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;
+  // Move
+  b.x+=b.vx;b.y+=b.vy;
+  if(b.x-b.r<0){b.x=b.r;b.vx=Math.abs(b.vx);}
+  if(b.x+b.r>canvas.width){b.x=canvas.width-b.r;b.vx=-Math.abs(b.vx);}
+  if(b.y-b.r<0){b.y=b.r;b.vy=Math.abs(b.vy);}
+  if(b.y+b.r>canvas.height){b.y=canvas.height-b.r;b.vy=-Math.abs(b.vy);}
+});
+
+// Firework particles
+particles=particles.filter(p=>p.life>0.02);
+particles.forEach(p=>{
+  ctx.beginPath();ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2);
+  ctx.fillStyle=p.color;ctx.globalAlpha=p.life;ctx.fill();ctx.globalAlpha=1;
+  p.x+=p.vx;p.y+=p.vy;p.vy+=0.12;p.life-=0.025;
+});
+
+overstimRAF=requestAnimationFrame(draw);
+```
+
+}
+draw();
+
+// Auto-spawn fireworks
+overstimInterval.push(setInterval(spawnFirework,400));
+overstimInterval.push(setInterval(spawnFirework,700));
+
+// Floating thought words
+function spawnOverstimThought(){
+const el=document.createElement(‘div’);
+el.className=‘overstim-thought’;
+const c=overstimColors[Math.floor(Math.random()*overstimColors.length)];
+const w=overstimThoughtWords[Math.floor(Math.random()*overstimThoughtWords.length)];
+const dur=3+Math.random()*4;
+el.style.cssText=`left:${Math.random()*85}%;background:${c}22;color:${c};border:1px solid ${c};--dur:${dur}s;`;
+el.textContent=w;
+document.getElementById(‘overstimThoughts’).appendChild(el);
+setTimeout(()=>el.remove(),(dur+1)*1000);
+}
+overstimInterval.push(setInterval(spawnOverstimThought,300));
+for(let i=0;i<6;i++) setTimeout(spawnOverstimThought,i*200);
+
+// Big bouncy numbers
+const numsEl=document.getElementById(‘overstimNumbers’);
+function spawnNumber(){
+const num=Math.floor(Math.random()*999)+1;
+const c=overstimColors[Math.floor(Math.random()*overstimColors.length)];
+const el=document.createElement(‘div’);
+el.className=‘overstim-number’;
+el.style.cssText=`color:${c};animation-delay:${Math.random()*0.3}s;`;
+el.textContent=num;
+numsEl.appendChild(el);
+setTimeout(()=>el.remove(),1800);
+}
+overstimInterval.push(setInterval(spawnNumber,180));
+for(let i=0;i<8;i++) setTimeout(spawnNumber,i*120);
+
+// Resize canvas
+window.addEventListener(‘resize’,resizeOvCanvas);
+function resizeOvCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+}
+
+function stopOverstim(){
+const overlay=document.getElementById(‘overstimOverlay’);
+overlay.style.display=‘none’;
+cancelAnimationFrame(overstimRAF);
+overstimInterval.forEach(clearInterval);
+overstimInterval=[];
+overstimBalls=[];
+const ctx=document.getElementById(‘overstimCanvas’).getContext(‘2d’);
+ctx.clearRect(0,0,9999,9999);
+document.getElementById(‘overstimThoughts’).innerHTML=’’;
+document.getElementById(‘overstimNumbers’).innerHTML=’’;
+window.removeEventListener(‘resize’,()=>{});
+notify(‘👋 Back to reality. That was a lot.’,’#00d4ff’);
+// Spike chaos
+const chaos=Math.min(99,parseInt(document.getElementById(‘chaosNum’).textContent)+35);
+document.getElementById(‘chaosBar’).style.width=chaos+’%’;
+document.getElementById(‘chaosNum’).textContent=chaos+’%’;
+}
+
+// ===== VIBE CHECK =====
+const vibes=[
+{cat:‘checkin’,emoji:‘🌡️’,color:’#c84bff’,title:‘Brain Temperature Check’,body:‘On a scale of 1 to 10, how full does your brain feel right now?’,action:‘1 = totally empty. 10 = 47 tabs open and something is on fire. No wrong answers.’},
+{cat:‘checkin’,emoji:‘⏰’,color:’#00d4ff’,title:‘Time Check’,body:‘When did you last eat, drink water, or move your body?’,action:‘If you can't remember: that's your answer. Go do one of those things.’},
+{cat:‘checkin’,emoji:‘💬’,color:’#ff2d78’,title:‘Feelings Inventory’,body:‘Name ONE feeling you have right now. Just one. You only need one.’,action:‘There's no wrong feeling. Naming it is the whole exercise.’},
+{cat:‘checkin’,emoji:‘🔋’,color:’#00ffaa’,title:‘Energy Audit’,body:‘Is your tiredness physical, mental, or emotional right now?’,action:‘They feel similar but come from different places. Knowing which one helps you pick the right recovery.’},
+{cat:‘checkin’,emoji:‘🧠’,color:’#ffe600’,title:‘Chaos Level Check’,body:‘How many things are you trying to think about simultaneously right now?’,action:‘Count them. Seriously. Writing them down moves them out of working memory and onto paper — which is the whole point.’},
+{cat:‘challenge’,emoji:‘🎯’,color:’#ff7b2c’,title:‘Two Minute Task’,body:‘Pick ONE thing that takes under 2 minutes. Do it RIGHT NOW before you do anything else.’,action:‘Reply the email. Put the cup away. Send the message. Two minutes. Go.’},
+{cat:‘challenge’,emoji:‘🌊’,color:’#00d4ff’,title:‘Body Scan’,body:‘Starting from your feet, notice each part of your body. Are you holding tension anywhere?’,action:‘Shoulders up by your ears? Jaw clenched? Breath held? ADHD bodies carry stress physically. Release one thing.’},
+{cat:‘challenge’,emoji:‘📝’,color:’#c84bff’,title:‘Brain Dump’,body:‘Grab something to write on. Set a timer for 3 minutes. Write every single thing in your head.’,action:‘No filtering. No organising. Just empty it out. Your brain is not a storage system.’},
+{cat:‘challenge’,emoji:‘🚶’,color:’#00ffaa’,title:‘Movement Reset’,body:‘Stand up and move your body for 60 seconds. Walk, stretch, jump, shake your arms.’,action:‘Did you know 60 seconds of movement increases dopamine more effectively than most other short interventions? Go.’},
+{cat:‘challenge’,emoji:‘🔦’,color:’#ffe600’,title:‘One Thing Focus’,body:‘Pick ONE task. Set a timer for 10 minutes. Do only that one thing. When the timer goes off, you're done.’,action:‘The goal isn't to finish it. The goal is to start it and stay with it for 10 minutes. That's it.’},
+{cat:‘all’,emoji:‘✨’,color:’#ff2d78’,title:‘Did You Know?’,body:‘The ADHD brain releases dopamine differently during creative tasks. When something is genuinely novel or exciting, ADHD brains can produce focused attention that rivals or exceeds neurotypical levels.’,action:‘Your brain isn't broken. It's just running on a different fuel source.’},
+{cat:‘all’,emoji:‘🎲’,color:’#ff7b2c’,title:‘Random Thought Prompt’,body:‘If your brain was a weather forecast right now, what would the weather be?’,action:‘Foggy with a chance of ideas? Thunderstorm of anxiety? Sunny with hyperfocus patches? There's no wrong answer.’},
+{cat:‘all’,emoji:‘💡’,color:’#c84bff’,title:‘Reframe of the Day’,body:‘Every “distraction” is actually your brain noticing something it found more interesting than the task.’,action:‘That's not a character flaw. That's a very fast pattern-recognition system that needs a slightly different management strategy.’},
+{cat:‘all’,emoji:‘🌈’,color:’#00d4ff’,title:‘Sensory Check’,body:‘What's one thing around you right now that you find genuinely pleasing to look at, hear, or touch?’,action:‘ADHD brains are often sensory-seeking. Noticing pleasant sensations is a valid grounding tool.’},
+];
+let lastVibeIdx=-1;
+function rollVibe(){
+let idx;
+do{idx=Math.floor(Math.random()*vibes.length);}while(idx===lastVibeIdx);
+lastVibeIdx=idx;
+displayVibe(vibes[idx]);
+}
+function rollVibeCategory(cat){
+const filtered=vibes.filter(v=>v.cat===cat||v.cat===‘all’);
+const v=filtered[Math.floor(Math.random()*filtered.length)];
+displayVibe(v);
+}
+function displayVibe(v){
+const card=document.getElementById(‘vibeCard’);
+card.style.borderColor=v.color;
+card.style.boxShadow=`0 0 30px ${v.color}33`;
+document.getElementById(‘vibeEmoji’).textContent=v.emoji;
+document.getElementById(‘vibeTitle’).style.color=v.color;
+document.getElementById(‘vibeTitle’).textContent=v.title;
+document.getElementById(‘vibeBody’).textContent=v.body;
+const actionEl=document.getElementById(‘vibeAction’);
+actionEl.style.display=‘block’;
+actionEl.style.background=`${v.color}22`;
+actionEl.style.borderColor=`${v.color}55`;
+actionEl.style.color=v.color;
+actionEl.textContent=’💬 ’+v.action;
+// Little pop animation
+card.style.transform=‘scale(0.97)’;
+setTimeout(()=>card.style.transform=‘scale(1)’,200);
+}
+</script>
+
+</body>
+</html>
+<script>
+// ===== KIDS ZONE =====
+function showKidsSection(id,btn){
+  document.querySelectorAll('.kids-section').forEach(s=>s.style.display='none');
+  document.getElementById('kids-'+id).style.display='block';
+  document.querySelectorAll('.kids-pill').forEach(p=>p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+}
+const kidsFacts=[
+  {emoji:'🧠',title:'Your brain has 100 BILLION brain cells!',body:'That is more than all the stars you can see in the night sky. Every time you learn something new, your brain cells make new connections. Learning actually changes your brain!'},
+  {emoji:'⚡',title:'Some brains are super fast thinkers!',body:'Some brains work really quickly and notice lots of things all at once. That can make someone brilliantly creative and full of amazing ideas. Every brain has its own special way of working!'},
+  {emoji:'💡',title:'Your brain never stops working, even when you sleep!',body:'While you sleep, your brain sorts through everything you learned that day and stores it away like a library. That is why sleep helps you remember things so much better!'},
+  {emoji:'🎨',title:'Every brain can be creative in its own way!',body:'Some brains think about things from lots of different angles at once, which makes them brilliant at coming up with new ideas. There is no one right way to think, and that is wonderful!'},
+  {emoji:'🔥',title:'Brains can get really into things they love!',body:'Sometimes a brain gets SO into something it enjoys that everything else fades away. This can feel amazing. It means you can become absolutely brilliant at the things you really care about!'},
+  {emoji:'🌈',title:'Every brain is different and that is brilliant!',body:'No two brains in the whole world are exactly the same. Some people think differently from others and the world needs all kinds of thinkers to come up with big, exciting ideas!'},
+  {emoji:'❤️',title:'Feelings come from your brain!',body:'Your brain has a special part that creates feelings like happiness, sadness, excitement, and worry. These feelings are important signals that help you understand the world. All feelings are okay!'},
+  {emoji:'🏆',title:'Moving your body makes your brain work better!',body:'When you run, jump, or dance, your brain releases special chemicals that help you focus and feel happier. Even just five minutes of moving around can help your brain concentrate!'},
+];
+let kidsFactIdx=-1;
+function nextKidsFact(){
+  kidsFactIdx=(kidsFactIdx+1)%kidsFacts.length;
+  const f=kidsFacts[kidsFactIdx];
+  document.getElementById('kidsFactEmoji').textContent=f.emoji;
+  document.getElementById('kidsFactTitle').textContent=f.title;
+  const body=document.getElementById('kidsFactBody');
+  body.textContent=f.body;
+  body.style.animation='none';void body.offsetWidth;body.style.animation='fadeIn 0.4s ease';
+}
+nextKidsFact();
+
+const kidsActivities=[
+{emoji:‘🎨’,title:‘Draw Your Brain!’,body:‘Get some paper and draw a brain shape. Fill it with pictures of all the things you love and are good at. Colour it in with your favourite colours!’,challenge:‘Show it to someone and tell them about one thing in your drawing.’},
+{emoji:‘🌟’,title:‘Superpower Journal’,body:‘Write down or draw three things you did today that you are proud of. They can be tiny things like saying hello to someone or trying something new.’,challenge:‘Put it somewhere you can see it when you wake up tomorrow.’},
+{emoji:‘💃’,title:‘5 Minute Dance Break!’,body:‘Put on your favourite song and dance like nobody is watching for the whole song. Jump, spin, wave your arms. There is no wrong way to do it!’,challenge:‘Teach someone else your best move.’},
+{emoji:‘🌬’,title:‘Bubble Breathing’,body:‘Pretend you are blowing a giant bubble. Breathe in slowly through your nose, then breathe out as slowly as you can through your mouth.’,challenge:‘Do this 5 times and notice how your body feels after.’},
+{emoji:‘🤸’,title:‘Wiggle It Out!’,body:‘Stand up, shake your hands, shake your arms, wiggle your whole body, jump up and down 10 times, then stand still and take a big breath.’,challenge:‘Do this whenever you feel frustrated or stuck.’},
+{emoji:‘🌿’,title:‘Nature Spot’,body:‘Go to a window or outside. Find five things that are green. Then find something that is moving in the wind. Just notice the world around you for one minute.’,challenge:‘What is the most interesting thing you spotted?’},
+{emoji:‘🎯’,title:‘One Thing Focus’,body:‘Pick one thing you want to do in the next ten minutes. Just one. Write it down or say it out loud. Set a timer and try just that one thing.’,challenge:‘When the timer goes off, give yourself a big well done!’},
+];
+let kidsActIdx=-1;
+function nextKidsActivity(){
+kidsActIdx=(kidsActIdx+1)%kidsActivities.length;
+const a=kidsActivities[kidsActIdx];
+document.getElementById(‘actEmoji’).textContent=a.emoji;
+document.getElementById(‘actTitle’).textContent=a.title;
+document.getElementById(‘actBody’).textContent=a.body;
+const ch=document.getElementById(‘actChallenge’);
+ch.style.display=‘block’; ch.textContent=’★ ’+a.challenge;
+const card=document.getElementById(‘kidsActivityCard’);
+if(card){card.style.animation=‘none’;void card.offsetWidth;card.style.animation=‘fadeIn 0.4s ease’;}
+}
+nextKidsActivity();
+
+const kidsSuperpowers=[
+{emoji:‘🔍’,title:‘You are a Super Noticer!’,body:‘Some brains notice things other people miss. You might spot something that changed, or notice how someone is feeling, before anyone else does. That is a truly amazing gift!’},
+{emoji:‘🚀’,title:‘You are an Idea Machine!’,body:‘Some brains come up with ideas faster than most people. Where others see one way to do something, you might think of ten. That kind of thinking changes the world!’},
+{emoji:‘🎯’,title:‘You have Laser Focus Power!’,body:‘When you love something, some brains can focus on it for hours without stopping. This can happen to anyone. It means you can become truly brilliant at the things you really care about!’},
+{emoji:‘❤️’,title:‘You are an Emotion Expert!’,body:‘Some brains feel things very deeply. That means you really understand how other people feel, you care a lot, and you bring real warmth and kindness to the people around you.’},
+{emoji:‘🎨’,title:‘You are a Creative Genius!’,body:‘Thinking differently is at the heart of every great invention and discovery. Some brains make unusual connections between ideas, and that is exactly how creativity works!’},
+{emoji:‘⚡’,title:‘You have Energy Superpowers!’,body:‘Some brains bring incredible energy and enthusiasm to things they love. That excitement is contagious and it makes things more fun for everyone around you too!’},
+{emoji:‘🌟’,title:‘You are a Brave Problem Solver!’,body:‘Trying new ways of doing things when the usual way does not work is called resilience. Every time you keep going when something is tricky, you are building one of the most powerful skills there is!’},
+];
+let kidsSpIdx=-1;
+function nextKidsSuperpower(){
+kidsSpIdx=(kidsSpIdx+1)%kidsSuperpowers.length;
+const s=kidsSuperpowers[kidsSpIdx];
+document.getElementById(‘spEmoji’).textContent=s.emoji;
+document.getElementById(‘spTitle’).textContent=s.title;
+const body=document.getElementById(‘spBody’);
+body.textContent=s.body;
+body.style.animation=‘none’;void body.offsetWidth;body.style.animation=‘fadeIn 0.4s ease’;
+}
+nextKidsSuperpower();
+
+function showFeeling(name,color,emoji,text){
+const r=document.getElementById(‘feelingResult’);
+r.style.display=‘block’;
+r.style.background=color+‘18’;
+r.style.borderColor=color;
+document.getElementById(‘feelingTitle’).innerHTML=’<span style="color:'+color+'">’+emoji+’ I feel ‘+name+’!</span>’;
+document.getElementById(‘feelingBody’).textContent=text;
+r.style.animation=‘none’;void r.offsetWidth;r.style.animation=‘fadeIn 0.4s ease’;
+setTimeout(function(){r.scrollIntoView({behavior:‘smooth’,block:‘nearest’});},100);
+}
+
+// Kids Game Modal
+function openKidsGame(type){
+var modal=document.getElementById(‘kidsGameModal’);
+var box=document.getElementById(‘kidsGameBox’);
+modal.style.opacity=‘1’; modal.style.pointerEvents=‘all’;
+box.style.transform=‘scale(1)’;
+clearInterval(gameTimer);
+if(type===‘emoji’) buildEmojiQuiz(box);
+else if(type===‘balloon’) buildBalloonGame(box);
+else if(type===‘animal’) buildAnimalQuiz(box);
+else if(type===‘colour’) buildColourTap(box);
+else if(type===‘count’) buildCountGame(box);
+else if(type===‘word’) buildWordScramble(box);
+}
+function closeKidsGame(){
+var modal=document.getElementById(‘kidsGameModal’);
+modal.style.opacity=‘0’; modal.style.pointerEvents=‘none’;
+document.getElementById(‘kidsGameBox’).style.transform=‘scale(0.9)’;
+clearInterval(gameTimer);
+}
+document.getElementById(‘kidsGameModal’).addEventListener(‘click’,function(e){if(e.target===this)closeKidsGame();});
+
+// Emoji Quiz
+var emojiQs=[
+{clue:‘🌍🌊🐋’,answer:‘ocean’,display:‘Ocean’},
+{clue:‘🌙⭐🔭’,answer:‘space’,display:‘Space’},
+{clue:‘🍕🧀🍅’,answer:‘pizza’,display:‘Pizza’},
+{clue:‘🌲🏕️🔥’,answer:‘camping’,display:‘Camping’},
+{clue:‘🎵🎸🎤’,answer:‘music’,display:‘Music’},
+{clue:‘📚✏️🎒’,answer:‘school’,display:‘School’},
+{clue:‘🐶🦴🏠’,answer:‘dog’,display:‘Dog’},
+{clue:‘❄️⛷️🏔️’,answer:‘winter’,display:‘Winter’},
+];
+var emojiScore=0,emojiIdx=0;
+function buildEmojiQuiz(box){emojiScore=0;emojiIdx=0;renderEmojiQ(box);}
+function renderEmojiQ(box){
+if(emojiIdx>=emojiQs.length){
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="text-align:center;padding:20px;"><div style="font-size:52px">🏆</div><div style="font-family:\'Fredoka One\',cursive;font-size:24px;color:#ffe600;margin:10px 0">Amazing!</div><div style="font-size:15px;font-weight:700;color:#c0b8e8">You got ‘+emojiScore+’ out of ‘+emojiQs.length+’!</div><button onclick="buildEmojiQuiz(document.getElementById(\'kidsGameBox\'))" style="margin-top:16px;background:#ffe600;border:none;border-radius:99px;padding:10px 24px;font-family:\'Fredoka One\',cursive;font-size:15px;cursor:pointer;color:#000">Play Again!</button></div>’;
+return;
+}
+var q=emojiQs[emojiIdx];
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="font-family:\'Fredoka One\',cursive;font-size:20px;color:#ffe600;margin-bottom:4px">😂 Emoji Quiz</div><div style="font-size:12px;color:#9090bb;font-weight:700;margin-bottom:18px">Question ‘+(emojiIdx+1)+’ of ‘+emojiQs.length+’ — Score: ‘+emojiScore+’</div><div style="text-align:center;font-size:52px;margin:14px 0;letter-spacing:8px">’+q.clue+’</div><div style="font-size:13px;font-weight:700;color:#c0b8e8;text-align:center;margin-bottom:14px">What does this show?</div><input id="emojiInput" type="text" placeholder="Type your answer..." maxlength="20" style="width:100%;background:rgba(255,255,255,0.07);border:2px solid #ffe600;border-radius:12px;padding:12px 14px;font-family:Nunito,sans-serif;font-size:14px;font-weight:700;color:var(--white);outline:none;margin-bottom:10px" onkeydown="if(event.key===\'Enter\')checkEmojiAnswer()"><button onclick="checkEmojiAnswer()" style="width:100%;background:#ffe600;border:none;border-radius:12px;padding:11px;font-family:\'Fredoka One\',cursive;font-size:15px;color:#000;cursor:pointer">Check Answer ✓</button><div id="emojiFb" style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:15px;min-height:22px;margin-top:8px"></div>’;
+}
+function checkEmojiAnswer(){
+var input=document.getElementById(‘emojiInput’);if(!input)return;
+var val=input.value.trim().toLowerCase();
+var q=emojiQs[emojiIdx];
+var correct=val===q.answer||val.includes(q.answer)||q.answer.includes(val);
+document.getElementById(‘emojiFb’).innerHTML=correct?’<span style="color:#00ffaa">✅ Yes! It was ‘+q.display+’!</span>’:’<span style="color:#ff2d78">❌ It was ‘+q.display+’! Keep going!</span>’;
+if(correct)emojiScore++;
+emojiIdx++;
+setTimeout(function(){renderEmojiQ(document.getElementById(‘kidsGameBox’));},1200);
+}
+
+// Balloon Pop
+var balloonInterval2=null,balloonScore=0,balloonTime2=20;
+function buildBalloonGame(box){
+balloonScore=0;balloonTime2=20;clearInterval(balloonInterval2);
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="font-family:\'Fredoka One\',cursive;font-size:20px;color:#00ffaa;margin-bottom:4px">🎈 Pop the Balloons!</div><div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="font-family:\'Fredoka One\',cursive;font-size:16px;color:#00ffaa">Popped: <span id="bScore">0</span></span><span style="font-family:\'Fredoka One\',cursive;font-size:16px;color:#ffe600">Time: <span id="bTime">20</span>s</span></div><div id="balloonArena" style="position:relative;height:300px;background:rgba(0,255,170,0.04);border-radius:16px;border:2px solid rgba(0,255,170,0.2);overflow:hidden"></div><div id="balloonMsg" style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:15px;min-height:22px;margin-top:10px"></div>’;
+var emojis=[‘🎈’,‘🎈’,‘🎈’,‘🎉’,‘⭐’,‘🌟’];
+function spawnBalloon(){
+var arena=document.getElementById(‘balloonArena’);if(!arena)return;
+var el=document.createElement(‘div’);
+var sz=38+Math.random()*22;
+var duration=7+Math.random()*5; // 7-12s so they rise slowly and stay tappable
+el.style.cssText=‘position:absolute;font-size:’+sz+‘px;left:’+Math.random()*80+’%;bottom:-80px;cursor:pointer;user-select:none;transition:transform 0.1s;’;
+el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+// Animate using JS so we control speed precisely
+var start=null;
+var arenaH=300;
+function rise(ts){
+if(!start)start=ts;
+var progress=(ts-start)/(duration*1000);
+if(progress>=1||!el.parentNode){el.remove();return;}
+var bottom=-80+(arenaH+160)*progress;
+el.style.bottom=bottom+‘px’;
+requestAnimationFrame(rise);
+}
+requestAnimationFrame(rise);
+el.onclick=function(){
+balloonScore++;
+var sc=document.getElementById(‘bScore’);if(sc)sc.textContent=balloonScore;
+el.style.transform=‘scale(2.2)’;el.style.opacity=‘0’;
+setTimeout(function(){el.remove();},200);
+};
+arena.appendChild(el);
+setTimeout(function(){if(el.parentNode)el.remove();},duration*1000+500);
+}
+spawnBalloon();spawnBalloon();spawnBalloon();
+balloonInterval2=setInterval(spawnBalloon,900);
+var bTimer=setInterval(function(){
+balloonTime2–;
+var t=document.getElementById(‘bTime’);if(t)t.textContent=balloonTime2;
+if(balloonTime2<=0){
+clearInterval(bTimer);clearInterval(balloonInterval2);
+var msg=document.getElementById(‘balloonMsg’);
+if(msg)msg.innerHTML=’<span style="color:'+(balloonScore>=15?'#00ffaa':balloonScore>=8?'#ffe600':'#ff99ff')+'">’+(balloonScore>=15?‘🏆 Legend! ‘+balloonScore+’ balloons!’:balloonScore>=8?‘⭐ Great! ‘+balloonScore+’ popped!’:‘🎈 ‘+balloonScore+’ balloons! Try again!’)+’</span>’;
+}
+},1000);
+}
+
+// Animal Quiz
+var animalQs=[
+{emoji:‘🐘’,q:‘Which animal has a trunk?’,opts:[‘Elephant’,‘Giraffe’,‘Lion’,‘Hippo’],a:0},
+{emoji:‘🦒’,q:‘Which animal has the longest neck?’,opts:[‘Horse’,‘Camel’,‘Giraffe’,‘Zebra’],a:2},
+{emoji:‘🐧’,q:‘Which bird loves to swim but cannot fly?’,opts:[‘Eagle’,‘Penguin’,‘Parrot’,‘Owl’],a:1},
+{emoji:‘🦁’,q:‘Which animal is called King of the Jungle?’,opts:[‘Tiger’,‘Bear’,‘Lion’,‘Leopard’],a:2},
+{emoji:‘🐬’,q:‘Which sea animal is playful and super smart?’,opts:[‘Shark’,‘Dolphin’,‘Whale’,‘Crab’],a:1},
+{emoji:‘🦓’,q:‘Which animal has black and white stripes?’,opts:[‘Panda’,‘Tiger’,‘Zebra’,‘Cow’],a:2},
+];
+var animalScore=0,animalIdx=0;
+function buildAnimalQuiz(box){animalScore=0;animalIdx=0;renderAnimalQ(box);}
+function renderAnimalQ(box){
+if(animalIdx>=animalQs.length){
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="text-align:center;padding:20px"><div style="font-size:52px">🏆</div><div style="font-family:\'Fredoka One\',cursive;font-size:24px;color:#ff99ff;margin:10px 0">Brilliant!</div><div style="font-size:15px;font-weight:700;color:#c0b8e8">’+animalScore+’ out of ‘+animalQs.length+’ correct!</div><button onclick="buildAnimalQuiz(document.getElementById(\'kidsGameBox\'))" style="margin-top:16px;background:#ff99ff;border:none;border-radius:99px;padding:10px 24px;font-family:\'Fredoka One\',cursive;font-size:15px;cursor:pointer;color:#000">Play Again!</button></div>’;
+return;
+}
+var q=animalQs[animalIdx];
+var optsHTML=q.opts.map(function(o,i){return ‘<button onclick="checkAnimal('+i+')" style="background:var(--panel2);border:2px solid rgba(255,153,255,0.3);border-radius:14px;padding:13px 10px;font-family:\'Fredoka One\',cursive;font-size:14px;cursor:pointer;color:var(--white);transition:all 0.2s">’+o+’</button>’;}).join(’’);
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="font-family:\'Fredoka One\',cursive;font-size:20px;color:#ff99ff;margin-bottom:4px">🦁 Animal Quiz</div><div style="font-size:12px;color:#9090bb;font-weight:700;margin-bottom:14px">Question ‘+(animalIdx+1)+’ of ‘+animalQs.length+’ — Score: ‘+animalScore+’</div><div style="text-align:center;font-size:64px;margin:10px 0">’+q.emoji+’</div><div style="font-family:\'Fredoka One\',cursive;font-size:18px;text-align:center;margin-bottom:16px">’+q.q+’</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">’+optsHTML+’</div><div id="animalFb" style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:15px;min-height:22px;margin-top:10px"></div>’;
+}
+function checkAnimal(i){
+var q=animalQs[animalIdx];
+var correct=i===q.a;
+document.getElementById(‘animalFb’).innerHTML=correct?’<span style="color:#00ffaa">✅ Correct! Well done!</span>’:’<span style="color:#ff2d78">❌ It was ‘+q.opts[q.a]+’!</span>’;
+if(correct)animalScore++;
+animalIdx++;
+setTimeout(function(){renderAnimalQ(document.getElementById(‘kidsGameBox’));},1200);
+}
+
+// Colour Tap
+var ctCols=[{n:‘Red’,bg:’#ff2d78’},{n:‘Blue’,bg:’#00d4ff’},{n:‘Green’,bg:’#00ffaa’},{n:‘Yellow’,bg:’#ffe600’},{n:‘Purple’,bg:’#c84bff’},{n:‘Orange’,bg:’#ff7b2c’}];
+var colourScore=0,colourTime2=25;
+function buildColourTap(box){
+colourScore=0;colourTime2=25;clearInterval(gameTimer);
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="font-family:\'Fredoka One\',cursive;font-size:20px;color:#00d4ff;margin-bottom:4px">🎨 Colour Tap!</div><div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-family:\'Fredoka One\',cursive;font-size:16px;color:#00d4ff">Score: <span id="cScore">0</span></span><span style="font-family:\'Fredoka One\',cursive;font-size:16px;color:#ffe600">Time: <span id="cTime">25</span>s</span></div><div style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:20px;margin-bottom:12px;padding:10px;background:var(--panel2);border-radius:12px">Tap: <span id="cTarget" style="font-size:24px"></span></div><div id="colourGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div><div id="colourMsg" style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:14px;min-height:20px;margin-top:8px"></div>’;
+function newCRound(){
+var target=ctCols[Math.floor(Math.random()*ctCols.length)];
+var tEl=document.getElementById(‘cTarget’);if(!tEl)return;
+tEl.innerHTML=’<span style="color:'+target.bg+'">’+target.n+’</span>’;
+var shuffled=ctCols.slice().sort(function(){return Math.random()-0.5;}).slice(0,4);
+if(!shuffled.find(function(c){return c.n===target.n;}))shuffled[0]=target;
+shuffled.sort(function(){return Math.random()-0.5;});
+var grid=document.getElementById(‘colourGrid’);if(!grid)return;
+grid.innerHTML=’’;
+shuffled.forEach(function(c){
+var btn=document.createElement(‘button’);
+btn.style.cssText=‘background:’+c.bg+’;border:none;border-radius:12px;height:54px;cursor:pointer;font-size:12px;font-family:'Fredoka One',cursive;color:#000;font-weight:700;’;
+btn.textContent=c.n;
+btn.onclick=function(){
+if(c.n===target.n){colourScore++;var sc=document.getElementById(‘cScore’);if(sc)sc.textContent=colourScore;var m=document.getElementById(‘colourMsg’);if(m)m.innerHTML=’<span style="color:#00ffaa">✅</span>’;newCRound();}
+else{var m=document.getElementById(‘colourMsg’);if(m)m.innerHTML=’<span style="color:#ff2d78">❌ That was ‘+c.n+’!</span>’;newCRound();}
+};
+grid.appendChild(btn);
+});
+}
+newCRound();
+gameTimer=setInterval(function(){
+colourTime2–;
+var t=document.getElementById(‘cTime’);if(t)t.textContent=colourTime2;
+if(colourTime2<=0){clearInterval(gameTimer);var m=document.getElementById(‘colourMsg’);if(m)m.innerHTML=’<span style="color:#ffe600">Time up! ‘+colourScore+’ correct! 🎨</span>’;var g=document.getElementById(‘colourGrid’);if(g)g.innerHTML=’’;}
+},1000);
+}
+
+// Count Game
+var countScore=0,countTime2=30;
+function buildCountGame(box){
+countScore=0;countTime2=30;clearInterval(gameTimer);
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="font-family:\'Fredoka One\',cursive;font-size:20px;color:#ff7b2c;margin-bottom:4px">🔢 Count It!</div><div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="font-family:\'Fredoka One\',cursive;font-size:16px;color:#ff7b2c">Score: <span id="ctScore">0</span></span><span style="font-family:\'Fredoka One\',cursive;font-size:16px;color:#ffe600">Time: <span id="ctTime">30</span>s</span></div><div id="dotArea" style="background:rgba(255,123,44,0.06);border:2px solid rgba(255,123,44,0.2);border-radius:16px;padding:14px;min-height:90px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-bottom:12px"></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="countOpts"></div><div id="countFb" style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:14px;min-height:20px;margin-top:8px"></div>’;
+var dotColors=[’#ff2d78’,’#00d4ff’,’#ffe600’,’#00ffaa’,’#c84bff’,’#ff7b2c’];
+function newCountQ(){
+var n=3+Math.floor(Math.random()*8);
+var dots=document.getElementById(‘dotArea’),opts=document.getElementById(‘countOpts’);if(!dots||!opts)return;
+dots.innerHTML=’’;
+for(var i=0;i<n;i++){var d=document.createElement(‘div’);d.style.cssText=‘width:24px;height:24px;border-radius:50%;background:’+dotColors[Math.floor(Math.random()*6)]+’;animation:bop ‘+(0.8+Math.random()*0.6)+‘s infinite ease-in-out;flex-shrink:0;’;dots.appendChild(d);}
+var wrong=new Set([n]),answers=[n];
+while(answers.length<4){var w=Math.max(1,n+Math.floor(Math.random()*5)-2);if(!wrong.has(w)){wrong.add(w);answers.push(w);}}
+answers.sort(function(){return Math.random()-0.5;});opts.innerHTML=’’;
+answers.forEach(function(a){
+var btn=document.createElement(‘button’);
+btn.style.cssText=‘background:var(–panel2);border:2px solid rgba(255,123,44,0.3);border-radius:12px;padding:12px;font-family:'Fredoka One',cursive;font-size:18px;cursor:pointer;color:var(–white);’;
+btn.textContent=a;
+btn.onclick=function(){
+if(a===n){countScore++;var sc=document.getElementById(‘ctScore’);if(sc)sc.textContent=countScore;var fb=document.getElementById(‘countFb’);if(fb)fb.innerHTML=’<span style="color:#00ffaa">✅ Correct!</span>’;}
+else{var fb=document.getElementById(‘countFb’);if(fb)fb.innerHTML=’<span style="color:#ff2d78">❌ It was ‘+n+’!</span>’;}
+newCountQ();
+};
+opts.appendChild(btn);
+});
+}
+newCountQ();
+gameTimer=setInterval(function(){
+countTime2–;var t=document.getElementById(‘ctTime’);if(t)t.textContent=countTime2;
+if(countTime2<=0){clearInterval(gameTimer);var fb=document.getElementById(‘countFb’);if(fb)fb.innerHTML=’<span style="color:#ffe600">Time up! ‘+countScore+’ correct! 🌟</span>’;var o=document.getElementById(‘countOpts’);if(o)o.innerHTML=’’;}
+},1000);
+}
+
+// Word Scramble
+var scrambleWords=[
+{word:‘BRAIN’,hint:‘You think with this!’},
+{word:‘HAPPY’,hint:‘A great feeling!’},
+{word:‘STARS’,hint:‘They shine at night’},
+{word:‘MAGIC’,hint:‘Tricks and spells!’},
+{word:‘TIGER’,hint:‘A big stripy cat’},
+{word:‘DANCE’,hint:‘Move to music!’},
+{word:‘PIZZA’,hint:‘Delicious round food’},
+{word:‘CLOUD’,hint:‘Fluffy things in the sky’},
+];
+var scrambleIdx=0,scrambleScore=0;
+function buildWordScramble(box){scrambleIdx=0;scrambleScore=0;renderScramble(box);}
+function renderScramble(box){
+if(scrambleIdx>=scrambleWords.length){
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="text-align:center;padding:20px"><div style="font-size:52px">🏆</div><div style="font-family:\'Fredoka One\',cursive;font-size:24px;color:#c84bff;margin:10px 0">Word Wizard!</div><div style="font-size:15px;font-weight:700;color:#c0b8e8">’+scrambleScore+’ out of ‘+scrambleWords.length+’!</div><button onclick="buildWordScramble(document.getElementById(\'kidsGameBox\'))" style="margin-top:16px;background:#c84bff;border:none;border-radius:99px;padding:10px 24px;font-family:\'Fredoka One\',cursive;font-size:15px;cursor:pointer;color:#fff">Play Again!</button></div>’;
+return;
+}
+var w=scrambleWords[scrambleIdx];
+var scrambled=w.word.split(’’).sort(function(){return Math.random()-0.5;}).join(’’);
+box.innerHTML=’<button class="close-btn" onclick="closeKidsGame()">✕</button><div style="font-family:\'Fredoka One\',cursive;font-size:20px;color:#c84bff;margin-bottom:4px">📝 Word Scramble</div><div style="font-size:12px;color:#9090bb;font-weight:700;margin-bottom:14px">Word ‘+(scrambleIdx+1)+’ of ‘+scrambleWords.length+’ — Score: ‘+scrambleScore+’</div><div style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:36px;color:#c84bff;letter-spacing:8px;margin:14px 0;background:rgba(200,75,255,0.1);border-radius:14px;padding:14px">’+scrambled+’</div><div style="text-align:center;font-size:13px;color:#9090bb;font-weight:700;margin-bottom:12px">Hint: ‘+w.hint+’</div><input id="scrambleInput" type="text" placeholder="Unscramble it..." maxlength="10" style="width:100%;background:rgba(255,255,255,0.07);border:2px solid #c84bff;border-radius:12px;padding:12px 14px;font-family:Nunito,sans-serif;font-size:15px;font-weight:700;color:var(--white);outline:none;margin-bottom:10px;text-transform:uppercase"><button onclick="checkScramble()" style="width:100%;background:#c84bff;border:none;border-radius:12px;padding:11px;font-family:\'Fredoka One\',cursive;font-size:15px;color:#fff;cursor:pointer">Check ✓</button><div id="scrambleFb" style="text-align:center;font-family:\'Fredoka One\',cursive;font-size:15px;min-height:22px;margin-top:8px"></div>’;
+window._currentScrambleWord=w.word;
+}
+function checkScramble(){
+var word=window._currentScrambleWord;
+var input=document.getElementById(‘scrambleInput’);if(!input)return;
+var val=input.value.trim().toUpperCase();
+var correct=val===word;
+document.getElementById(‘scrambleFb’).innerHTML=correct?’<span style="color:#00ffaa">YES! It was ‘+word+’!</span>’:’<span style="color:#ff2d78">It was ‘+word+’! Great try!</span>’;
+if(correct)scrambleScore++;
+scrambleIdx++;
+setTimeout(function(){renderScramble(document.getElementById(‘kidsGameBox’));},1200);
+}
+</script>
+
+</body>
+</html>
